@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <Platforms>x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>4.7</LangVersion>
+    <RootNamespace>FGame.DomainLogic</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="WorldPos.fs" />
+    <Compile Include="Actors.fs" />
+    <Compile Include="World.fs" />
+    <Compile Include="Simulator.fs" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <Platforms>x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <LangVersion>4.7</LangVersion>
+    <RootNamespace>FGame.ConsoleApp</RootNamespace>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <Compile Include="Input.fs" />
+    <Compile Include="Display.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\DomainLogic\DomainLogic.fsproj" />
+  </ItemGroup>
+
+</Project>
