@@ -24,7 +24,7 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\DomainLogic\DomainLogic.fsproj" />
+    <ProjectReference Include="..\..\Libraries\FGame.DomainLogic\FGame.DomainLogic.fsproj" />
   </ItemGroup>
 
 </Project>

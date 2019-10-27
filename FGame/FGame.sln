@@ -3,9 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "ConsoleApp", "Applications\ConsoleApp\ConsoleApp.fsproj", "{2C62C9D8-7F3A-4828-8D37-C567261F58D9}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FGame.ConsoleApp", "Applications\FGame.ConsoleApp\FGame.ConsoleApp.fsproj", "{2C62C9D8-7F3A-4828-8D37-C567261F58D9}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DomainLogic", "Libraries\DomainLogic\DomainLogic.fsproj", "{946F0209-DE43-4492-8FF8-BDC7F2367A84}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FGame.DomainLogic", "Libraries\FGame.DomainLogic\FGame.DomainLogic.fsproj", "{946F0209-DE43-4492-8FF8-BDC7F2367A84}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{95774B4E-FF5B-4034-B60A-A15DBEA06189}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{25A8F870-1B8B-4980-A8F4-BD33CEA6CCA7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D03D2087-8A16-444D-883E-2A87E92870D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +30,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2C62C9D8-7F3A-4828-8D37-C567261F58D9} = {95774B4E-FF5B-4034-B60A-A15DBEA06189}
+		{946F0209-DE43-4492-8FF8-BDC7F2367A84} = {25A8F870-1B8B-4980-A8F4-BD33CEA6CCA7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B89FE2C7-3EDC-40AB-AA28-B550EF48B170}
