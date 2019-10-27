@@ -3,6 +3,7 @@
 open System
 open FGame.DomainLogic.Simulator
 
+
 type Command =
     | Action of GameCommand
     | Exit

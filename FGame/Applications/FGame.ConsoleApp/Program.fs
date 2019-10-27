@@ -6,6 +6,7 @@ open FGame.ConsoleApp.Input
 open FGame.DomainLogic.Simulator
 open FGame.DomainLogic.World
 
+
 [<EntryPoint>]
 let main _ =
     try
