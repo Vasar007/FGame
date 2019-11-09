@@ -13,12 +13,15 @@ type ActorKind =
 type Actor = {
     Pos: WorldPos
     Kind: ActorKind
+    IsActive : bool
 }
 
 let getChar (actor: Actor) =
     match actor.Kind with
-        | Squirrel _ -> 'S'
-        | Tree _     -> 'T'
-        | Acorn _    -> 'a'
-        | Rabbit _   -> 'R'
-        | Doggo _    -> 'D'
+        | Squirrel hasAcorn -> match hasAcorn with
+                                   | true  -> 'S'
+                                   | false -> 's'
+        | Tree              -> 'T'
+        | Acorn             -> 'a'
+        | Rabbit            -> 'R'
+        | Doggo             -> 'D'

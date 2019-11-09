@@ -14,3 +14,8 @@ let isAdjacentTo (posA: WorldPos) (posB: WorldPos) =
     let xDiff = abs (posA.X - posB.X)
     let yDiff = abs (posA.Y - posB.Y)
     xDiff <= 1 && yDiff <= 1
+
+let getRandomPos(maxX: int32, maxY: int32, getRandom: int32 -> int32) =
+  let x = getRandom maxX 
+  let y = getRandom maxY
+  newPos x y

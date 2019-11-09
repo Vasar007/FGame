@@ -23,58 +23,21 @@ type World =
         this.Doggo
     ]
 
+let tryGetActor (x, y) (world: World) =
+    world.Actors 
+    |> Seq.tryFind(fun actor -> actor.IsActive && actor.Pos.X = x && actor.Pos.Y = y)
 
-let getRandomPos (maxX: int32, maxY: int32, getRandom: int32 -> int32) =
-    let x = getRandom maxX
-    let y = getRandom maxY
-    newPos x y
+let getCharacterAtCell (x, y) (world: World) =
+    match tryGetActor(x,y) world with
+        | Some actor -> getChar actor
+        | None       -> '.'
 
-let buildItemsArray (maxX: int32, maxY: int32, getRandom: int32 -> int32) =
-    [
-        { Pos = getRandomPos (maxX, maxY, getRandom); Kind = Squirrel false }
-        { Pos = getRandomPos (maxX, maxY, getRandom); Kind = Tree }
-        { Pos = getRandomPos (maxX, maxY, getRandom); Kind = Acorn }
-        { Pos = getRandomPos (maxX, maxY, getRandom); Kind = Rabbit }
-        { Pos = getRandomPos (maxX, maxY, getRandom); Kind = Doggo }
-    ]
- 
-let hasInvalidPlacedItems (items: list<Actor>) (maxX: int32) (maxY: int32) =
-    let mutable hasIssues = false
+let isValidPos (pos: WorldPos) (world: World) =
+    pos.X >= minPos.X &&
+    pos.Y >= minPos.Y &&
+    pos.X <= world.MaxX &&
+    pos.Y <= world.MaxY
 
-    for itemA in items do
-        // Do not allow items to spawn in corners.
-        let condition =
-            (itemA.Pos.X = minPos.X || itemA.Pos.X = maxX) &&
-            (itemA.Pos.Y = minPos.Y || itemA.Pos.Y = maxY)
-        if condition then
-            hasIssues <- true
-
-        for itemB in items do
-            if itemA <> itemB then
-                // Do not allow two items to start next to each other.
-                if isAdjacentTo itemA.Pos itemB.Pos then
-                    hasIssues <- true
-
-    hasIssues
-
-let generate (maxX: int32, maxY: int32, getRandom: int32 -> int32) =
-    let mutable items = buildItemsArray (maxX, maxY, getRandom)
-
-    // It is possible to generate items in invalid starting configuration.
-    // Make sure we do not do that.
-    while hasInvalidPlacedItems items maxX maxY do
-        items <- buildItemsArray (maxX, maxY, getRandom)
-
-    items
-
-let makeWorld (maxX: int32, maxY: int32) (getRandom: int32 -> int32) =
-    let actors = generate (maxX, maxY, getRandom)
-    {
-        MaxX = maxX
-        MaxY = maxY
-        Squirrel = actors.[0]
-        Tree = actors.[1]
-        Acorn = actors.[2]
-        Rabbit = actors.[3]
-        Doggo = actors.[4]
-    }
+let hasObstacle pos (world: World) : bool =
+    world.Actors
+    |> Seq.exists(fun actor -> pos = actor.Pos)

@@ -14,30 +14,28 @@ let main _ =
             printfn "FGame started."
 
             let getRandomNumber =
-                let random = new Random()
+                let random = Random()
                 fun max -> (random.Next max) + 1
-
-            let world = makeWorld worldSize getRandomNumber
-
+            
+            let world = makeTestWorld false
+            
             let mutable state = {
                 World = world
+                SimState = Simulating
+                TurnsLeft = 30
             }
-            let mutable simulating = true
-
+            let mutable (simulating: bool) = true
+            
             while simulating do
-                let userCommand =
-                    getUserInput state.World
-                    |> tryParseInput
-
+                let userCommand = getUserInput(state) |> tryParseInput
+            
                 match userCommand with
-                    | None -> printfn "Invalid input"
-                    | Some command ->
-                        match command with
-                            | Exit ->
-                                simulating <- false
-                            | Action gameCommand ->
-                                state <- playTurn state getRandomNumber gameCommand
-
+                    | Some command -> 
+                        match command with 
+                            | Exit               -> simulating <- false
+                            | Action gameCommand -> state <- playTurn state getRandomNumber gameCommand
+                    | None -> printfn "Invalid input."
+                
             0 // return an integer exit code.
         with
             | ex ->
