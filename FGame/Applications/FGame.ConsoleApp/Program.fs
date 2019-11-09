@@ -4,7 +4,7 @@ open System
 open FGame.ConsoleApp.Display
 open FGame.ConsoleApp.Input
 open FGame.DomainLogic.Simulator
-open FGame.DomainLogic.World
+open FGame.DomainLogic.WorldGeneration
 
 
 [<EntryPoint>]

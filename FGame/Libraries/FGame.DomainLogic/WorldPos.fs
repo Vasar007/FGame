@@ -9,6 +9,7 @@ let newPos (x: int32) (y: int32) =
     { X = x; Y = y }
 
 let minPos = newPos 1 1
+let maxPos = newPos 13 13
 
 let isAdjacentTo (posA: WorldPos) (posB: WorldPos) =
     let xDiff = abs (posA.X - posB.X)

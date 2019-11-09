@@ -57,8 +57,8 @@ let makeWorld (maxX: int32, maxY: int32) (getRandom: int32 -> int32) =
 
 let makeTestWorld hasAcorn = 
   {
-    MaxX     = 13;
-    MaxY     = 13;
+    MaxX     = maxPos.X;
+    MaxY     = maxPos.Y;
     Squirrel = { Pos = { X = 1;  Y = 3  }; Kind = Squirrel hasAcorn; IsActive = true};
     Tree     = { Pos = { X = 8;  Y = 10 }; Kind = Tree;              IsActive = true};
     Doggo    = { Pos = { X = 2;  Y = 6  }; Kind = Doggo;             IsActive = true};

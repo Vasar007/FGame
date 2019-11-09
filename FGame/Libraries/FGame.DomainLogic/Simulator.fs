@@ -22,10 +22,7 @@ type GameState =
     member this.Player = this.World.Squirrel
 
 let stepSize = 1
-
 let defaultTurnsLeft = 30
-
-let worldSize = (13, 13)
 
 let canEnterActorCell (actor: ActorKind) (target: ActorKind) =
     match target with
@@ -53,7 +50,7 @@ let moveActor (state: GameState) (actor: Actor) (pos: WorldPos) =
                     World = {
                         world with
                             Rabbit = { world.Rabbit with IsActive = false }
-                            Doggo  = { world.Doggo with Pos = pos }
+                            Doggo = { world.Doggo with Pos = pos }
                     }
             }
         else
@@ -63,7 +60,7 @@ let moveActor (state: GameState) (actor: Actor) (pos: WorldPos) =
                     World = {
                         world with
                             Squirrel = { world.Squirrel with IsActive = false }
-                            Doggo    = { world.Doggo with Pos = pos }
+                            Doggo = { world.Doggo with Pos = pos }
                     }
             }
 
@@ -75,7 +72,7 @@ let moveActor (state: GameState) (actor: Actor) (pos: WorldPos) =
                     World = {
                         world with
                             Squirrel = { Kind = Squirrel true; Pos = pos; IsActive = true } 
-                            Acorn    = { world.Acorn with IsActive = false }
+                            Acorn = { world.Acorn with IsActive = false }
                     }
             }
         else if hasAcorn && otherActor.Kind = Tree then
@@ -90,7 +87,7 @@ let moveActor (state: GameState) (actor: Actor) (pos: WorldPos) =
         else
             performMove
 
-    let target = tryGetActor(pos.X, pos.Y) world
+    let target = tryGetActor (pos.X, pos.Y) world
 
     match target with
         | None -> performMove
@@ -118,9 +115,9 @@ let getCandidates (current: WorldPos, world: World, includeCenter: bool) =
     candidates
 
 let moveRandomly (state: GameState) (actor: Actor) (getRandomNumber: int32 -> int32) =
-    let current = actor.Pos
+    let current = actor.Pos 
     let movedPos = getCandidates(current, state.World, false) 
-                   |> Seq.sortBy(fun _ -> getRandomNumber 1000)
+                   |> Seq.sortBy (fun _ -> getRandomNumber 1000)
                    |> Seq.head
 
     moveActor state actor movedPos
@@ -156,14 +153,14 @@ let handlePlayerCommand (state: GameState) (command: GameCommand) =
     let player = state.World.Squirrel
     let xDelta =
         match command with
-            | MoveLeft | MoveDownLeft | MoveUpLeft    -> -1
-            | MoveRight | MoveDownRight | MoveUpRight -> 1
-            | _                                       -> 0
+            | MoveLeft  | MoveDownLeft  | MoveUpLeft  -> -stepSize
+            | MoveRight | MoveDownRight | MoveUpRight ->  stepSize
+            | _                                       ->  0
     let yDelta =
         match command with
-            | MoveUpLeft | MoveUp | MoveUpRight       -> -1
-            | MoveDownLeft | MoveDown | MoveDownRight -> 1
-            | _                                       -> 0
+            | MoveUpLeft   | MoveUp   | MoveUpRight   -> -stepSize
+            | MoveDownLeft | MoveDown | MoveDownRight ->  stepSize
+            | _                                       ->  0
     
     let movedPos = {
         X = player.Pos.X + xDelta
@@ -180,9 +177,9 @@ let playTurn (state: GameState) (getRandomNumber: int32 -> int32) (command: Game
     match command with 
         | Restart ->
             {
-                World     = makeWorld (world.MaxX, world.MaxY) getRandomNumber
-                SimState  = Simulating
-                TurnsLeft = 30
+                World = makeWorld (world.MaxX, world.MaxY) getRandomNumber
+                SimState = Simulating
+                TurnsLeft = defaultTurnsLeft
             }
         | _       ->
             match state.SimState with
