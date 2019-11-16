@@ -16,16 +16,16 @@ let main _ =
             let getRandomNumber =
                 let random = Random()
                 fun max -> (random.Next max) + 1
-            
+
             let world = makeTestWorld false
-            
+
             let mutable state = {
                 World = world
                 SimState = Simulating
                 TurnsLeft = 30
             }
             let mutable (simulating: bool) = true
-            
+
             while simulating do
                 let userCommand = getUserInput(state) |> tryParseInput
             
@@ -35,7 +35,7 @@ let main _ =
                             | Exit               -> simulating <- false
                             | Action gameCommand -> state <- playTurn state getRandomNumber gameCommand
                     | None -> printfn "Invalid input."
-                
+
             0 // return an integer exit code.
         with
             | ex ->

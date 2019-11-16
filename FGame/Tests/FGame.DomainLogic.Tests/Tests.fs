@@ -129,7 +129,7 @@ let ``Squirrel getting acorn to tree should win game`` () =
     }
   
     // Act.
-    let newState = handlePlayerCommand state MoveLeft // MoveLeft to climb to the Tree.
+    let newState = handlePlayerCommand state MoveLeft // MoveLeft to climb to the tree.
 
     // Assert.
     newState.World.Squirrel.Pos |> should equal state.World.Tree.Pos

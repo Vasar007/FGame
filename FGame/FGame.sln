@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D03D2087
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "FGame.DomainLogic.Tests", "Tests\FGame.DomainLogic.Tests\FGame.DomainLogic.Tests.fsproj", "{913E974A-C275-4953-85EC-75F041930054}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FGame.WindowsApp", "Applications\FGame.WindowsApp\FGame.WindowsApp.csproj", "{EF119A65-1E88-463F-AB5F-C2CABB3CBEF2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -33,6 +35,10 @@ Global
 		{913E974A-C275-4953-85EC-75F041930054}.Debug|x64.Build.0 = Debug|x64
 		{913E974A-C275-4953-85EC-75F041930054}.Release|x64.ActiveCfg = Release|x64
 		{913E974A-C275-4953-85EC-75F041930054}.Release|x64.Build.0 = Release|x64
+		{EF119A65-1E88-463F-AB5F-C2CABB3CBEF2}.Debug|x64.ActiveCfg = Debug|x64
+		{EF119A65-1E88-463F-AB5F-C2CABB3CBEF2}.Debug|x64.Build.0 = Debug|x64
+		{EF119A65-1E88-463F-AB5F-C2CABB3CBEF2}.Release|x64.ActiveCfg = Release|x64
+		{EF119A65-1E88-463F-AB5F-C2CABB3CBEF2}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,6 +47,7 @@ Global
 		{2C62C9D8-7F3A-4828-8D37-C567261F58D9} = {95774B4E-FF5B-4034-B60A-A15DBEA06189}
 		{946F0209-DE43-4492-8FF8-BDC7F2367A84} = {25A8F870-1B8B-4980-A8F4-BD33CEA6CCA7}
 		{913E974A-C275-4953-85EC-75F041930054} = {D03D2087-8A16-444D-883E-2A87E92870D7}
+		{EF119A65-1E88-463F-AB5F-C2CABB3CBEF2} = {95774B4E-FF5B-4034-B60A-A15DBEA06189}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B89FE2C7-3EDC-40AB-AA28-B550EF48B170}
