@@ -63,7 +63,7 @@ let ``Dog should eat squirrel if adjacent`` () =
     // Assert.
     newState.World.Doggo.Pos |> should equal state.World.Squirrel.Pos
     newState.World.Squirrel.IsActive |> should equal false
-    newState.SimState |> should equal Lost
+    newState.SimState |> should equal SimulationState.Lost
 
 [<Fact>]
 let ``Simulating actors should decrease the turns left counter`` () =   
@@ -85,7 +85,7 @@ let ``Running out of turns should lose the simulation`` () =
     let newState = simulateActors state getRandomNumber
   
     // Assert.
-    newState.SimState |> should equal Lost
+    newState.SimState |> should equal SimulationState.Lost
 
 [<Fact>]
 let ``Squirrel getting acorn should change how it displays`` () =
@@ -133,4 +133,4 @@ let ``Squirrel getting acorn to tree should win game`` () =
 
     // Assert.
     newState.World.Squirrel.Pos |> should equal state.World.Tree.Pos
-    newState.SimState |> should equal Won
+    newState.SimState |> should equal SimulationState.Won

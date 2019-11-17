@@ -43,9 +43,12 @@ let getUserInput (state: GameState) =
     printfn ""
   
     match state.SimState with
-        | Simulating -> printfn "Press Arrow Keys to move, R to regenerate, or X to exit"
-        | Won        -> printfn "Squirrel Returned Home with the Acorn! Press R to reload or X to exit."
-        | Lost       -> printfn "Simulation ended: Squirrel died. Press R to reload or X to exit."
+        | SimulationState.Simulating -> printfn "Press Arrow Keys to move, R to regenerate, or X to exit"
+        | SimulationState.Won        -> printfn "Squirrel Returned Home with the Acorn! Press R to reload or X to exit."
+        | SimulationState.Lost       -> printfn "Simulation ended: Squirrel died. Press R to reload or X to exit."
+        | _                          -> invalidArg "state"
+                                                   ("Simulation state is out of range: \"" +
+                                                    state.SimState.ToString() + "\".")
 
     let key = Console.ReadKey(true)
     Console.Clear()

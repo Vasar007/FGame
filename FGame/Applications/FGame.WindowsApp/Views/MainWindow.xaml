@@ -20,10 +20,138 @@
         TextOptions.TextRenderingMode="Auto"
         prism:ViewModelLocator.AutoWireViewModel="True">
 
-    <Grid>
-        <TextBlock FontFamily="Courier New"
-                   FontSize="18"
-                   Text="{Binding Path=TextGrid}" />
-    </Grid>
+    <Window.Resources>
+        <Style TargetType="Button"
+               x:Key="CommandButtonStyle">
+            <Setter Property="Margin"
+                    Value="5" />
+        </Style>
+
+        <Style TargetType="Button"
+               x:Key="MoveButtonStyle"
+               BasedOn="{StaticResource ResourceKey=CommandButtonStyle}">
+            <Setter Property="Width"
+                    Value="50" />
+            <Setter Property="Height"
+                    Value="50" />
+            <Setter Property="HorizontalContentAlignment"
+                    Value="Center" />
+        </Style>
+    </Window.Resources>
+
+    <DockPanel>
+        <!-- Status Bar -->
+        <StatusBar DockPanel.Dock="Bottom"
+                   Background="{Binding Path=GameStatusBrush}"
+                   FontWeight="Bold">
+            <StatusBarItem>
+                <TextBlock Text="{Binding Path=TurnsLeftText}" />
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+                <TextBlock Text="{Binding Path=GameStatusText}" />
+            </StatusBarItem>
+        </StatusBar>
+
+        <!-- Commands Area -->
+        <StackPanel DockPanel.Dock="Right"
+                    Width="150">
+            <UniformGrid Rows="3"
+                         Columns="3">
+                <Button Style="{StaticResource ResourceKey=MoveButtonStyle}"
+                        Command="{Binding Path=MoveCommand}"
+                        CommandParameter="NW">
+                    NW
+                </Button>
+                <Button Style="{StaticResource ResourceKey=MoveButtonStyle}"
+                        Command="{Binding Path=MoveCommand}"
+                        CommandParameter="N">
+                    N
+                </Button>
+                <Button Style="{StaticResource ResourceKey=MoveButtonStyle}"
+                        Command="{Binding Path=MoveCommand}"
+                        CommandParameter="NE">
+                    NE
+                </Button>
+                <Button Style="{StaticResource ResourceKey=MoveButtonStyle}"
+                        Command="{Binding Path=MoveCommand}"
+                        CommandParameter="W">
+                    W
+                </Button>
+                <Button Style="{StaticResource ResourceKey=MoveButtonStyle}"
+                        Command="{Binding Path=MoveCommand}"
+                        CommandParameter="Wait">
+                    Wait
+                </Button>
+                <Button Style="{StaticResource ResourceKey=MoveButtonStyle}"
+                        Command="{Binding Path=MoveCommand}"
+                        CommandParameter="E">
+                    E
+                </Button>
+                <Button Style="{StaticResource ResourceKey=MoveButtonStyle}"
+                        Command="{Binding Path=MoveCommand}"
+                        CommandParameter="SW">
+                    SW
+                </Button>
+                <Button Style="{StaticResource ResourceKey=MoveButtonStyle}"
+                        Command="{Binding Path=MoveCommand}"
+                        CommandParameter="S">
+                    S
+                </Button>
+                <Button Style="{StaticResource ResourceKey=MoveButtonStyle}"
+                        Command="{Binding Path=MoveCommand}"
+                        CommandParameter="SE">
+                    SE
+                </Button>
+            </UniformGrid>
+
+            <Button Style="{StaticResource ResourceKey=CommandButtonStyle}"
+                    Command="{Binding Path=ResetCommand}">
+                Restart
+            </Button>
+        </StackPanel>
+
+        <!-- Main UI -->
+        <Grid Margin="10"
+              Background="Green">
+            <Image Source="Grass.png"
+                   Stretch="Fill"
+                   HorizontalAlignment="Stretch"
+                   VerticalAlignment="Stretch" />
+            <Viewbox Stretch="Uniform">
+                <Border BorderThickness="1"
+                        BorderBrush="DarkGreen">
+                    <ItemsControl ItemsSource="{Binding Path=Actors}"
+                                  Width="130"
+                                  Height="130">
+                        <ItemsControl.ItemTemplate>
+                            <ItemContainerTemplate>
+                                <Border BorderBrush="Black"
+                                        BorderThickness="1">
+                                    <Image Source="{Binding Path=ImagePath}"
+                                           Width="10"
+                                           Height="10"
+                                           Stretch="Fill">
+                                    </Image>
+                                </Border>
+                            </ItemContainerTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Canvas.Left"
+                                        Value="{Binding Path=PosX}" />
+                                <Setter Property="Canvas.Top"
+                                        Value="{Binding Path=PosY}" />
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                    </ItemsControl>
+                </Border>
+            </Viewbox>
+        </Grid>
+    </DockPanel>
 
 </Window>

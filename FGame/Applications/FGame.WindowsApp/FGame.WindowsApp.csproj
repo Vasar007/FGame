@@ -15,7 +15,19 @@
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
     <RootNamespace>FGame.WindowsApp</RootNamespace>
+    <ApplicationIcon>Resources\KillAllDefectsSymbol.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Acorn.png" />
+    <None Remove="Resources\Doggo.png" />
+    <None Remove="Resources\Grass.png" />
+    <None Remove="Resources\KillAllDefectsSymbol.ico" />
+    <None Remove="Resources\Rabbit.png" />
+    <None Remove="Resources\Squirrel.png" />
+    <None Remove="Resources\SquirrelAcorn.png" />
+    <None Remove="Resources\Tree.png" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Prism.Unity" Version="7.2.0.1367" />
@@ -28,6 +40,17 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Acorn.png" />
+    <Resource Include="Resources\Doggo.png" />
+    <Resource Include="Resources\Grass.png" />
+    <Resource Include="Resources\KillAllDefectsSymbol.ico" />
+    <Resource Include="Resources\Rabbit.png" />
+    <Resource Include="Resources\Squirrel.png" />
+    <Resource Include="Resources\SquirrelAcorn.png" />
+    <Resource Include="Resources\Tree.png" />
   </ItemGroup>
 
 </Project>

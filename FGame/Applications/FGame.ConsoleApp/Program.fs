@@ -1,10 +1,10 @@
 ﻿module FGame.ConsoleApp.ConsoleApp
 
-open System
 open FGame.ConsoleApp.Display
 open FGame.ConsoleApp.Input
 open FGame.DomainLogic.Simulator
 open FGame.DomainLogic.WorldGeneration
+open FGame.DomainLogic.WorldPos
 
 
 [<EntryPoint>]
@@ -13,15 +13,13 @@ let main _ =
         try
             printfn "FGame started."
 
-            let getRandomNumber =
-                let random = Random()
-                fun max -> (random.Next max) + 1
+            let getRandomNumber = createDefaultRandom
 
             let world = makeTestWorld false
 
             let mutable state = {
                 World = world
-                SimState = Simulating
+                SimState = SimulationState.Simulating
                 TurnsLeft = 30
             }
             let mutable (simulating: bool) = true

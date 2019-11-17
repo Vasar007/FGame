@@ -8,9 +8,9 @@ open FGame.DomainLogic.WorldPos
 
 
 type SimulationState =
-    | Simulating
-    | Won
-    | Lost
+    | Simulating = 0
+    | Won = 1
+    | Lost = 2
 
 type GameState =
     {
@@ -56,7 +56,7 @@ let moveActor (state: GameState) (actor: Actor) (pos: WorldPos) =
         else
             {
                 state with
-                    SimState = Lost
+                    SimState = SimulationState.Lost
                     World = {
                         world with
                             Squirrel = { world.Squirrel with IsActive = false }
@@ -79,7 +79,7 @@ let moveActor (state: GameState) (actor: Actor) (pos: WorldPos) =
             // Moving to the tree with the acorn - this should win the game.
             {
                 state with
-                    SimState = Won
+                    SimState = SimulationState.Won
                     World = { 
                         world with Squirrel = { Kind = Squirrel true; Pos = pos; IsActive = true } 
                     }
@@ -136,11 +136,11 @@ let simulateDoggo (state: GameState) =
         state
 
 let decreaseTimer (state: GameState) =
-    if state.SimState = Simulating then
+    if state.SimState = SimulationState.Simulating then
         if state.TurnsLeft > 0 then
             { state with TurnsLeft = state.TurnsLeft - 1 }
         else
-            { state with TurnsLeft = 0; SimState = Lost }
+            { state with TurnsLeft = 0; SimState = SimulationState.Lost }
     else
         state
 
@@ -178,12 +178,19 @@ let playTurn (state: GameState) (getRandomNumber: int32 -> int32) (command: Game
         | Restart ->
             {
                 World = makeWorld (world.MaxX, world.MaxY) getRandomNumber
-                SimState = Simulating
+                SimState = SimulationState.Simulating
                 TurnsLeft = defaultTurnsLeft
             }
         | _       ->
             match state.SimState with
-                | Simulating -> 
+                | SimulationState.Simulating -> 
                     let newState = handlePlayerCommand state command 
                     simulateActors newState getRandomNumber
-                | _          -> state
+                | _ -> state
+
+let simulateTurn state command =
+    match state.SimState with
+        | SimulationState.Simulating ->
+            let newState = handlePlayerCommand state command
+            simulateActors(newState) createDefaultRandom
+        | _ -> state
