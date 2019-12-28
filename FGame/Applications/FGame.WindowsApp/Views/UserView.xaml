@@ -8,25 +8,6 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance viewModels:UserViewModel}">
 
-    <!--<UserControl.Resources>
-        <Style TargetType="Button"
-               x:Key="CommandButtonStyle">
-            <Setter Property="Margin"
-                    Value="5" />
-        </Style>
-
-        <Style TargetType="Button"
-               x:Key="MoveButtonStyle"
-               BasedOn="{StaticResource ResourceKey=CommandButtonStyle}">
-            <Setter Property="Width"
-                    Value="50" />
-            <Setter Property="Height"
-                    Value="50" />
-            <Setter Property="HorizontalContentAlignment"
-                    Value="Center" />
-        </Style>
-    </UserControl.Resources>-->
-
     <StackPanel DockPanel.Dock="Right"
                     Width="150">
         <UniformGrid Rows="3"

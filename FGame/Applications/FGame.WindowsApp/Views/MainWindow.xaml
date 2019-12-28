@@ -77,8 +77,7 @@
                                     <Image Source="{Binding Path=ImagePath}"
                                            Width="10"
                                            Height="10"
-                                           Stretch="Fill">
-                                    </Image>
+                                           Stretch="Fill" />
                                 </Border>
                             </ItemContainerTemplate>
                         </ItemsControl.ItemTemplate>

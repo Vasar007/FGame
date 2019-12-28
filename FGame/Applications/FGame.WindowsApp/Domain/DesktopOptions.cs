@@ -4,6 +4,6 @@
     {
         public static string Title { get; } = "FGame";
         
-        public static GameMode SelectedMode { get; } = GameMode.User;
+        public static GameMode SelectedMode { get; } = GameMode.ArtificialIntelligence;
     }
 }

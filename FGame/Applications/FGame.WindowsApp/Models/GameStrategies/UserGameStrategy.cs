@@ -3,13 +3,12 @@ using FGame.WindowsApp.Domain;
 
 namespace FGame.WindowsApp.Models.GameStrategies
 {
-    internal sealed class UserGameStrategy : IGameStrategy
+    internal sealed class UserGameStrategy
     {
         public UserGameStrategy()
         {
         }
 
-        #region IGameStrategy Implementation
         public Simulator.GameState Move(Simulator.GameState currentState, string? direction)
         {
             // Parameter validation/cleansing.
@@ -48,8 +47,6 @@ namespace FGame.WindowsApp.Models.GameStrategies
         {
             return CreateDefaultState();
         }
-
-        #endregion
 
         private static Simulator.GameState CreateDefaultState()
         {

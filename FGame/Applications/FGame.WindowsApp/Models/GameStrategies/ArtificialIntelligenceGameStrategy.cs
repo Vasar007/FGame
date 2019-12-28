@@ -1,51 +1,32 @@
 ﻿using System;
 using FGame.DomainLogic;
+using FGame.WindowsApp.Domain;
+using FGame.WindowsApp.ViewModels;
 
 namespace FGame.WindowsApp.Models.GameStrategies
 {
-    internal sealed class ArtificialIntelligenceGameStrategy : IGameStrategy
+    internal sealed class ArtificialIntelligenceGameStrategy
     {
-        public ArtificialIntelligenceGameStrategy()
+        private readonly Random _random;
+
+
+        public ArtificialIntelligenceGameStrategy(Random random)
         {
+            _random = random.ThrowIfNull(nameof(random));
         }
 
-        #region IGameStrategy Implementation
-
-        public Simulator.GameState Move(Simulator.GameState currentState, string? direction)
+        public Simulator.GameState Move(Simulator.GameState currentState, BrainInfoViewModel brain)
         {
-            // Parameter validation/cleansing.
-            if (currentState is null)
-            {
-                throw new ArgumentNullException(nameof(currentState));
-            }
-            direction = direction is null
-                ? string.Empty
-                : direction.ToLowerInvariant();
+            currentState.ThrowIfNull(nameof(currentState));
+            brain.ThrowIfNull(nameof(brain));
 
-            // Translate from the command parameter to the GameCommand in F#.
-            Commands.GameCommand command = direction switch
-            {
-                "nw" => Commands.GameCommand.MoveUpLeft,
-                "n" => Commands.GameCommand.MoveUp,
-                "ne" => Commands.GameCommand.MoveUpRight,
-                "w" => Commands.GameCommand.MoveLeft,
-                "e" => Commands.GameCommand.MoveRight,
-                "sw" => Commands.GameCommand.MoveDownLeft,
-                "s" => Commands.GameCommand.MoveDown,
-                "se" => Commands.GameCommand.MoveDownRight,
-                _ => Commands.GameCommand.Wait
-            };
-
-            // Process the action and update our new state.
-            return Simulator.simulateTurn(currentState, command);
+            return Simulator.handleChromosomeMove(currentState, _random, brain.Model);
         }
 
         public Simulator.GameState Reset(Simulator.GameState? currentState)
         {
             return CreateDefaultState();
         }
-
-        #endregion
 
         private static Simulator.GameState CreateDefaultState()
         {

@@ -10,7 +10,7 @@
 
     <Border DockPanel.Dock="Right"
             Width="150">
-        <StackPanel Margin="0,8,12,0">
+        <StackPanel Margin="0 8 12 0">
             <Button Style="{DynamicResource ResourceKey=CommandButtonStyle}"
                     Command="{Binding Path=BrainCommand}">
                 AI Move
@@ -23,6 +23,8 @@
                     Command="{Binding Path=ResetCommand}">
                 Restart
             </Button>
+
+            <local:BrainInfoView DataContext="{Binding Path=Brain}" />
         </StackPanel>
     </Border>
 

@@ -11,9 +11,9 @@ namespace FGame.WindowsApp.ViewModels
 {
     internal sealed class UserViewModel : BindableBase
     {
-        private readonly IGameStrategy _gameStrategy;
-
         private readonly IEventAggregator _eventAggregator;
+
+        private readonly UserGameStrategy _gameStrategy;
 
         // Initialize this field inside Reset call in ctor.
         private Simulator.GameState _state = default!;
@@ -24,11 +24,11 @@ namespace FGame.WindowsApp.ViewModels
 
 
         public UserViewModel(
-            IGameStrategy gameStrategy,
             IEventAggregator eventAggregator)
         {
-            _gameStrategy = gameStrategy.ThrowIfNull(nameof(gameStrategy));
             _eventAggregator = eventAggregator.ThrowIfNull(nameof(eventAggregator));
+
+            _gameStrategy = new UserGameStrategy();
 
             MoveCommand = new DelegateCommand<string?>(Move);
             ResetCommand = new DelegateCommand(Reset);

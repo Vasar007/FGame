@@ -2,7 +2,6 @@
 using System.Windows.Controls;
 using Prism.Events;
 using FGame.WindowsApp.Domain;
-using FGame.WindowsApp.Models.GameStrategies;
 using FGame.WindowsApp.ViewModels;
 using FGame.WindowsApp.Views;
 
@@ -30,16 +29,14 @@ namespace FGame.WindowsApp.Models
 
         private static UserControl MakeControlForUser(IEventAggregator eventAggregator)
         {
-            var gameStrategy = new UserGameStrategy();
-            var dataContext = new UserViewModel(gameStrategy, eventAggregator);
+            var dataContext = new UserViewModel(eventAggregator);
             return new UserView(dataContext);
         }
 
         private static UserControl MakeControlForArtificialIntelligence(
             IEventAggregator eventAggregator)
         {
-            var gameStrategy = new ArtificialIntelligenceGameStrategy();
-            var dataContext = new ArtificialIntelligenceViewModel(gameStrategy, eventAggregator);
+            var dataContext = new ArtificialIntelligenceViewModel(eventAggregator);
             return new ArtificialIntelligenceView(dataContext);
         }
     }
