@@ -14,28 +14,27 @@ namespace FGame.WindowsApp.ViewModels
 
         public string Text => Actors.getChar(_actor).ToString();
 
-        public string? ImagePath
-        {
-            get
-            {
-                string assemblyName = typeof(ActorViewModel).Assembly.GetName().Name
-                    ?? throw new InvalidOperationException("Cannnot get assembly name.");
-
-                // https://stackoverflow.com/a/2416464/8581036
-                string imageUriSourceFirstPart = $"/{assemblyName};component/";
-
-                const string resourceDirName = "Resources";
-                string? imageName = TryGetImageName();
-
-                return imageName is null
-                    ? null
-                    : imageUriSourceFirstPart + Path.Combine(resourceDirName, imageName);
-            }
-        }
+        public string? ImagePath => FindImagePath();
 
         public ActorViewModel(Actors.Actor actor)
         {
             _actor = actor ?? throw new ArgumentNullException(nameof(actor));
+        }
+
+        private string? FindImagePath()
+        {
+            string assemblyName = typeof(ActorViewModel).Assembly.GetName().Name
+                    ?? throw new InvalidOperationException("Cannnot get assembly name.");
+
+            // https://stackoverflow.com/a/2416464/8581036
+            string imageUriSourceFirstPart = $"/{assemblyName};component/";
+
+            const string resourceDirName = "Resources";
+            string? imageName = TryGetImageName();
+
+            return imageName is null
+                ? null
+                : imageUriSourceFirstPart + Path.Combine(resourceDirName, imageName);
         }
 
         private string? TryGetImageName()

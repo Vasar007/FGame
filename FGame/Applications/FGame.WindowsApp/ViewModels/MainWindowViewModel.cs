@@ -37,20 +37,7 @@ namespace FGame.WindowsApp.ViewModels
         public Simulator.GameState State
         {
             get => _state;
-            set
-            {
-                _state = value ?? throw new ArgumentNullException(nameof(value));
-
-                _actors.Clear();
-                foreach (var actor in _state.World.Actors.Where(a => a.IsActive))
-                {
-                    _actors.Add(new ActorViewModel(actor));
-                }
-
-                RaisePropertyChanged(nameof(GameStatusBrush));
-                RaisePropertyChanged(nameof(GameStatusText));
-                RaisePropertyChanged(nameof(TurnsLeftText));
-            }
+            set => UpdateState(value);
         }
         public IEnumerable<ActorViewModel> Actors => _actors;
 
@@ -65,6 +52,21 @@ namespace FGame.WindowsApp.ViewModels
             MoveCommand = new DelegateCommand<string?>(Move);
 
             Reset();
+        }
+
+        private void UpdateState(Simulator.GameState newState)
+        {
+            _state = newState ?? throw new ArgumentNullException(nameof(newState));
+
+            _actors.Clear();
+            foreach (var actor in _state.World.Actors.Where(a => a.IsActive))
+            {
+                _actors.Add(new ActorViewModel(actor));
+            }
+
+            RaisePropertyChanged(nameof(GameStatusBrush));
+            RaisePropertyChanged(nameof(GameStatusText));
+            RaisePropertyChanged(nameof(TurnsLeftText));
         }
 
         private void Reset()
