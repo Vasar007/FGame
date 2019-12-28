@@ -5,6 +5,7 @@ open FGame.DomainLogic.Commands
 open FGame.DomainLogic.World
 open FGame.DomainLogic.WorldGeneration
 open FGame.DomainLogic.WorldPos
+open FGame.DomainLogic.Genes
 
 
 type SimulationState =
@@ -192,5 +193,17 @@ let simulateTurn state command =
     match state.SimState with
         | SimulationState.Simulating ->
             let newState = handlePlayerCommand state command
-            simulateActors(newState) createDefaultRandom
+            simulateActors newState createDefaultRandom
         | _ -> state
+
+
+let handleChromosomeMove (state: GameState, random: System.Random, chromosome: ActorChromosome) =
+    if state.SimState = SimulationState.Simulating then
+        let current = state.World.Squirrel.Pos
+        let movedPos = getCandidates(current, state.World, true) 
+                       |> Seq.sortBy(fun pos -> evaluateTile(chromosome, state.World, pos, random))
+                       |> Seq.head
+        let newState = moveActor state state.World.Squirrel movedPos
+        simulateActors newState random.Next
+    else
+        state
