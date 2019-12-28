@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="FGame.WindowsApp.Views.ArtificialIntelligenceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:local="clr-namespace:FGame.WindowsApp.Views"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance viewModels:ArtificialIntelligenceViewModel}">
+
+    <Border DockPanel.Dock="Right"
+            Width="150">
+        <StackPanel Margin="0,8,12,0">
+            <Button Style="{DynamicResource ResourceKey=CommandButtonStyle}"
+                    Command="{Binding Path=BrainCommand}">
+                AI Move
+            </Button>
+            <Button Style="{DynamicResource ResourceKey=CommandButtonStyle}"
+                    Command="{Binding Path=RandomizeCommand}">
+                Randomize Brain
+            </Button>
+            <Button Style="{DynamicResource ResourceKey=CommandButtonStyle}"
+                    Command="{Binding Path=ResetCommand}">
+                Restart
+            </Button>
+        </StackPanel>
+    </Border>
+
+</UserControl>

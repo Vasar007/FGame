@@ -16,6 +16,7 @@ namespace FGame.WindowsApp.ViewModels
 
         public string? ImagePath => FindImagePath();
 
+
         public ActorViewModel(Actors.Actor actor)
         {
             _actor = actor ?? throw new ArgumentNullException(nameof(actor));

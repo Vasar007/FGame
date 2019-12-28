@@ -7,9 +7,9 @@
         xmlns:viewModels="clr-namespace:FGame.WindowsApp.ViewModels"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
-        Title="FGame"
-        Height="325"
-        Width="450"
+        Title="{Binding Path=Title}"
+        Height="650"
+        Width="755"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Background="Black"
@@ -24,7 +24,7 @@
         <Style TargetType="Button"
                x:Key="CommandButtonStyle">
             <Setter Property="Margin"
-                    Value="5" />
+                    Value="0,5,0,5" />
         </Style>
 
         <Style TargetType="Button"
@@ -53,67 +53,14 @@
         </StatusBar>
 
         <!-- Commands Area -->
-        <StackPanel DockPanel.Dock="Right"
-                    Width="150">
-            <UniformGrid Rows="3"
-                         Columns="3">
-                <Button Style="{StaticResource ResourceKey=MoveButtonStyle}"
-                        Command="{Binding Path=MoveCommand}"
-                        CommandParameter="NW">
-                    NW
-                </Button>
-                <Button Style="{StaticResource ResourceKey=MoveButtonStyle}"
-                        Command="{Binding Path=MoveCommand}"
-                        CommandParameter="N">
-                    N
-                </Button>
-                <Button Style="{StaticResource ResourceKey=MoveButtonStyle}"
-                        Command="{Binding Path=MoveCommand}"
-                        CommandParameter="NE">
-                    NE
-                </Button>
-                <Button Style="{StaticResource ResourceKey=MoveButtonStyle}"
-                        Command="{Binding Path=MoveCommand}"
-                        CommandParameter="W">
-                    W
-                </Button>
-                <Button Style="{StaticResource ResourceKey=MoveButtonStyle}"
-                        Command="{Binding Path=MoveCommand}"
-                        CommandParameter="Wait">
-                    Wait
-                </Button>
-                <Button Style="{StaticResource ResourceKey=MoveButtonStyle}"
-                        Command="{Binding Path=MoveCommand}"
-                        CommandParameter="E">
-                    E
-                </Button>
-                <Button Style="{StaticResource ResourceKey=MoveButtonStyle}"
-                        Command="{Binding Path=MoveCommand}"
-                        CommandParameter="SW">
-                    SW
-                </Button>
-                <Button Style="{StaticResource ResourceKey=MoveButtonStyle}"
-                        Command="{Binding Path=MoveCommand}"
-                        CommandParameter="S">
-                    S
-                </Button>
-                <Button Style="{StaticResource ResourceKey=MoveButtonStyle}"
-                        Command="{Binding Path=MoveCommand}"
-                        CommandParameter="SE">
-                    SE
-                </Button>
-            </UniformGrid>
-
-            <Button Style="{StaticResource ResourceKey=CommandButtonStyle}"
-                    Command="{Binding Path=ResetCommand}">
-                Restart
-            </Button>
-        </StackPanel>
+        <DockPanel DockPanel.Dock="Right">
+            <ContentControl Content="{Binding Path=GameContent}" />
+        </DockPanel>
 
         <!-- Main UI -->
         <Grid Margin="10"
               Background="Green">
-            <Image Source="Grass.png"
+            <Image Source="../Resources/Grass.png"
                    Stretch="Fill"
                    HorizontalAlignment="Stretch"
                    VerticalAlignment="Stretch" />

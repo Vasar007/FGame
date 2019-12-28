@@ -1,30 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Input;
+using System.Windows.Controls;
 using System.Windows.Media;
-using FGame.DomainLogic;
-using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Events;
+using FGame.DomainLogic;
+using FGame.WindowsApp.Domain;
+using FGame.WindowsApp.Domain.Messages;
+using FGame.WindowsApp.Models;
 
 namespace FGame.WindowsApp.ViewModels
 {
     internal sealed class MainWindowViewModel : BindableBase
     {
+        private readonly IEventAggregator _eventAggregator;
+
         private readonly ObservableCollection<ActorViewModel> _actors;
+
+        private string _title;
+        public string Title
+        {
+            get => _title;
+            set => SetProperty(ref _title, value.ThrowIfNull(nameof(value)));
+        }
 
         public string GameStatusText => _state.SimState switch
         {
             Simulator.SimulationState.Won => "Won",
+
             Simulator.SimulationState.Lost => "Lost",
+
             _ => "Simulating"
         };
 
         public Brush GameStatusBrush => _state.SimState switch
         {
             Simulator.SimulationState.Won => Brushes.MediumSeaGreen,
+
             Simulator.SimulationState.Lost => Brushes.LightCoral,
+
             _ => Brushes.LightGray
         };
 
@@ -39,24 +54,36 @@ namespace FGame.WindowsApp.ViewModels
             get => _state;
             set => UpdateState(value);
         }
+
+        private UserControl _gameContent = default!;
+        public UserControl GameContent
+        {
+            get => _gameContent;
+            set => SetProperty(ref _gameContent, value.ThrowIfNull(nameof(value)));
+        }
+
         public IEnumerable<ActorViewModel> Actors => _actors;
 
-        public ICommand ResetCommand { get; }
 
-        public ICommand MoveCommand { get; }
-
-        public MainWindowViewModel()
+        public MainWindowViewModel(IEventAggregator eventAggregator)
         {
-            _actors = new ObservableCollection<ActorViewModel>();
-            ResetCommand = new DelegateCommand(Reset);
-            MoveCommand = new DelegateCommand<string?>(Move);
+            _eventAggregator = eventAggregator.ThrowIfNull(nameof(eventAggregator));
 
-            Reset();
+            _actors = new ObservableCollection<ActorViewModel>();
+            _title = DesktopOptions.Title;
+
+            _eventAggregator
+                .GetEvent<UpdateGameStateMessage>()
+                .Subscribe(UpdateState);
+
+            _gameContent = GameControlFactory.CreateControl(
+                DesktopOptions.SelectedMode, eventAggregator
+            );
         }
 
         private void UpdateState(Simulator.GameState newState)
         {
-            _state = newState ?? throw new ArgumentNullException(nameof(newState));
+            _state = newState.ThrowIfNull(nameof(newState));
 
             _actors.Clear();
             foreach (var actor in _state.World.Actors.Where(a => a.IsActive))
@@ -67,37 +94,6 @@ namespace FGame.WindowsApp.ViewModels
             RaisePropertyChanged(nameof(GameStatusBrush));
             RaisePropertyChanged(nameof(GameStatusText));
             RaisePropertyChanged(nameof(TurnsLeftText));
-        }
-
-        private void Reset()
-        {
-            World.World world = WorldGeneration.makeDefaultWorld();
-            State = new Simulator.GameState(world, Simulator.SimulationState.Simulating, 30);
-        }
-
-        private void Move(string? direction)
-        {
-            // Parameter validation/cleansing.
-            direction = direction is null
-                ? string.Empty
-                : direction.ToLowerInvariant();
-
-            // Translate from the command parameter to the GameCommand in F#.
-            Commands.GameCommand command = direction switch
-            {
-                "nw" => Commands.GameCommand.MoveUpLeft,
-                "n"  => Commands.GameCommand.MoveUp,
-                "ne" => Commands.GameCommand.MoveUpRight,
-                "w"  => Commands.GameCommand.MoveLeft,
-                "e"  => Commands.GameCommand.MoveRight,
-                "sw" => Commands.GameCommand.MoveDownLeft,
-                "s"  => Commands.GameCommand.MoveDown,
-                "se" => Commands.GameCommand.MoveDownRight,
-                _    => Commands.GameCommand.Wait
-            };
-
-            // Process the action and update our new state.
-            State = Simulator.simulateTurn(_state, command);
         }
     }
 }
