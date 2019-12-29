@@ -27,18 +27,18 @@ namespace FGame.WindowsApp.ViewModels
 
         public string GameStatusText => _state.SimState switch
         {
-            Simulator.SimulationState.Won => "Won",
+            States.SimulationState.Won => "Won",
 
-            Simulator.SimulationState.Lost => "Lost",
+            States.SimulationState.Lost => "Lost",
 
             _ => "Simulating"
         };
 
         public Brush GameStatusBrush => _state.SimState switch
         {
-            Simulator.SimulationState.Won => Brushes.MediumSeaGreen,
+            States.SimulationState.Won => Brushes.MediumSeaGreen,
 
-            Simulator.SimulationState.Lost => Brushes.LightCoral,
+            States.SimulationState.Lost => Brushes.LightCoral,
 
             _ => Brushes.LightGray
         };
@@ -48,8 +48,8 @@ namespace FGame.WindowsApp.ViewModels
                 : $"{_state.TurnsLeft.ToString()} Turns Left";
 
         // Initialize this field inside Reset call in ctor (through State property).
-        private Simulator.GameState _state = default!;
-        public Simulator.GameState State
+        private States.GameState _state = default!;
+        public States.GameState State
         {
             get => _state;
             set => UpdateState(value);
@@ -81,7 +81,7 @@ namespace FGame.WindowsApp.ViewModels
             );
         }
 
-        private void UpdateState(Simulator.GameState newState)
+        private void UpdateState(States.GameState newState)
         {
             _state = newState.ThrowIfNull(nameof(newState));
 

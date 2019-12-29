@@ -3,7 +3,7 @@ using FGame.DomainLogic;
 
 namespace FGame.WindowsApp.Domain.Messages
 {
-    internal sealed class UpdateGameStateMessage : PubSubEvent<Simulator.GameState>
+    internal sealed class UpdateGameStateMessage : PubSubEvent<States.GameState>
     {
         public UpdateGameStateMessage()
         {

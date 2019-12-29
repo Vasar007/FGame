@@ -15,6 +15,7 @@ namespace FGame.WindowsApp
     /// </summary>
     public sealed partial class App : PrismApplication
     {
+        // TODO: try Elmish.WPF library to simplify WPF logic.
         public App()
         {
             // Set current culture for app globally.

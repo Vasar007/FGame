@@ -19,7 +19,7 @@ namespace FGame.WindowsApp.ViewModels
         private readonly Random _random;
 
         // Initialize this field inside Reset call in ctor.
-        private Simulator.GameState _state = default!;
+        private States.GameState _state = default!;
 
         // Initialize this field inside RandomizeBrain call in ctor.
         private BrainInfoViewModel _brain = default!;

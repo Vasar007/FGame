@@ -9,7 +9,7 @@ namespace FGame.WindowsApp.Models.GameStrategies
         {
         }
 
-        public Simulator.GameState Move(Simulator.GameState currentState, string? direction)
+        public States.GameState Move(States.GameState currentState, string? direction)
         {
             // Parameter validation/cleansing.
             currentState.ThrowIfNull(nameof(currentState));
@@ -43,16 +43,16 @@ namespace FGame.WindowsApp.Models.GameStrategies
             return Simulator.simulateTurn(currentState, command);
         }
 
-        public Simulator.GameState Reset(Simulator.GameState? currentState)
+        public States.GameState Reset(States.GameState? currentState)
         {
             return CreateDefaultState();
         }
 
-        private static Simulator.GameState CreateDefaultState()
+        private static States.GameState CreateDefaultState()
         {
             World.World world = WorldGeneration.makeDefaultWorld();
             const int turnsLeft = 30;
-            return new Simulator.GameState(world, Simulator.SimulationState.Simulating, turnsLeft);
+            return new States.GameState(world, States.SimulationState.Simulating, turnsLeft);
         }
     }
 }

@@ -2,25 +2,13 @@
 
 open FGame.DomainLogic.Actors
 open FGame.DomainLogic.Commands
-open FGame.DomainLogic.World
-open FGame.DomainLogic.WorldGeneration
-open FGame.DomainLogic.WorldPos
+open FGame.DomainLogic.Fitness
 open FGame.DomainLogic.Genes
+open FGame.DomainLogic.States
+open FGame.DomainLogic.World
+open FGame.DomainLogic.WorldPos
+open FGame.DomainLogic.WorldGeneration
 
-
-type SimulationState =
-    | Simulating = 0
-    | Won = 1
-    | Lost = 2
-
-type GameState =
-    {
-        World: World
-        SimState: SimulationState
-        TurnsLeft: int32
-    }
-
-    member this.Player = this.World.Squirrel
 
 let stepSize = 1
 let defaultTurnsLeft = 30
@@ -197,13 +185,54 @@ let simulateTurn state command =
         | _ -> state
 
 
-let handleChromosomeMove (state: GameState, random: System.Random, chromosome: ActorChromosome) =
+let handleChromosomeMove (state: GameState) (random: System.Random) (chromosome: ActorChromosome) =
     if state.SimState = SimulationState.Simulating then
         let current = state.World.Squirrel.Pos
-        let movedPos = getCandidates(current, state.World, true) 
-                       |> Seq.sortBy(fun pos -> evaluateTile(chromosome, state.World, pos, random))
+        let movedPos = getCandidates (current, state.World, true) 
+                       |> Seq.sortBy(fun pos -> evaluateTile chromosome state.World pos)
                        |> Seq.head
         let newState = moveActor state state.World.Squirrel movedPos
         simulateActors newState random.Next
     else
         state
+
+let buildStartingStateForWorld world =
+    {
+        World = world
+        SimState = SimulationState.Simulating
+        TurnsLeft = 100
+    }
+
+let buildStartingState (random: System.Random) = 
+    makeWorld (15, 15) random.Next
+    |> buildStartingStateForWorld
+
+let simulateIndividualGame random brain fitnessFunction world: IndividualWorldResult =
+    let gameStates = ResizeArray<GameState>()
+    gameStates.Add(world)
+    let mutable currentState = world
+
+    while currentState.SimState = SimulationState.Simulating do
+        currentState <- handleChromosomeMove currentState random brain
+        gameStates.Add(currentState)
+
+    let gameStatesList = gameStates |> Seq.toList
+    {
+        Score = evaluateFitness (gameStatesList, fitnessFunction)
+        States = gameStatesList
+    }
+
+let simulateGame random brain fitnessFunction states =
+    let results = Seq.map (fun world -> simulateIndividualGame random brain fitnessFunction world) states
+    
+    {
+        TotalScore = Seq.map (fun e -> e.Score) results |> Seq.sum
+        Results = results |> Seq.toList
+        Brain = { brain with Age = brain.Age + 1 }
+    }
+
+let simulate brain worlds =
+    let states = Seq.map (fun w -> buildStartingStateForWorld w) worlds
+    let random = new System.Random(42)
+
+    simulateGame random brain killRabbitFitnessFunction states

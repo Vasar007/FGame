@@ -1,40 +1,114 @@
 ﻿module FGame.DomainLogic.Genes
 
-open FGame.DomainLogic.WorldPos
 open FGame.DomainLogic.Actors
+open FGame.DomainLogic.States
 open FGame.DomainLogic.World
+open FGame.DomainLogic.WorldPos
+
+
+type ActorGeneIndex =
+    | Doggo = 0
+    | Acorn = 1
+    | Rabbit = 2
+    | Tree = 3
+    | Squirrel = 4
+    | NextToDoggo = 5
+    | NextToRabbit = 6
 
 type ActorChromosome = {
-    DogImportance: double
-    AcornImportance: double
-    RabbitImportance: double
-    TreeImportance: double
-    SquirrelImportance: double
-    RandomImportance: double
+    Genes: list<double>
+    Age: int
 }
 
-let getRandomGene (random: System.Random) = (random.NextDouble() * 2.0) - 1.0
+type IndividualWorldResult = {
+    Score: float
+    States: list<GameState>
+}
+
+type SimulationResult = {
+    TotalScore: float
+    Results: list<IndividualWorldResult>
+    Brain: ActorChromosome
+}
+
+let getRandomGene (random: System.Random) =
+    (random.NextDouble() * 2.0) - 1.0
 
 let getRandomChromosome (random: System.Random) = 
     {
-        DogImportance = getRandomGene random;
-        AcornImportance = getRandomGene random;
-        RabbitImportance = getRandomGene random;
-        TreeImportance = getRandomGene random;
-        SquirrelImportance = getRandomGene random;
-        RandomImportance = getRandomGene random;
+        Genes = Seq.init 7 (fun _ -> getRandomGene random) |> Seq.toList
+        Age = 0
     }
 
-let evaluateProximity (actor: Actor, pos:WorldPos, weight: float) =
+let mutate (random: System.Random, magnitude, value) =
+    (value + (random.NextDouble() * magnitude))
+    |> max -1.0
+    |> min 1.0
+
+let mutateGenes (random: System.Random) mutationChance genes = 
+    List.map (
+        fun g ->
+            if random.NextDouble() <= mutationChance then
+                mutate(random, 0.5, g)
+            else
+                g
+    ) genes
+
+let getChildGenes (random: System.Random) parent1 parent2 mutationChance =
+    // Map from one parent to another, choosing a point to switch from one parent as the source
+    // to the other. Being an identical copy to either parent is also possible.
+    let crossoverIndex = random.Next(List.length parent1 + 1)
+
+    List.mapi2 (
+        fun i m f ->
+            if i <= crossoverIndex then
+                m
+            else
+                f
+    ) parent1 parent2
+    // Next allow each gene to be potentially mutated.
+    |> mutateGenes random mutationChance
+
+let createChild (random: System.Random, parent1: list<double>, parent2: list<double>, mutationChance: float) =
+    let genes = getChildGenes random parent1 parent2 mutationChance
+
+    {
+        Genes = genes |> Seq.toList
+        Age = 0
+    }
+
+let evaluateProximity actor pos weight =
     if actor.IsActive then
-        getDistance(actor.Pos, pos) * weight
+        let maxDistance = 225.0
+        let distance = getDistance (actor.Pos, pos)
+        if distance < maxDistance then
+            ((maxDistance - distance) / maxDistance) * weight
+        else
+            0.0
     else
         0.0
 
-let evaluateTile (brain: ActorChromosome, world: World, pos: WorldPos, random: System.Random) =
-    evaluateProximity(world.Squirrel, pos, brain.SquirrelImportance) +
-        evaluateProximity(world.Rabbit, pos, brain.RabbitImportance) +
-        evaluateProximity(world.Doggo, pos, brain.DogImportance) +
-        evaluateProximity(world.Acorn, pos, brain.AcornImportance) +
-        evaluateProximity(world.Tree, pos, brain.TreeImportance) +
-        (random.NextDouble() * brain.RandomImportance)
+let evaluateAdjacentTo actor pos weight = 
+    if actor.IsActive && actor.Pos <> pos then
+        if getDistance (actor.Pos, pos) <= 1.5 then
+            0.05 * weight
+        else
+            0.0
+    else
+        0.0
+
+let getGene (geneIndex: ActorGeneIndex) (genes: list<double>) =
+    genes.[int geneIndex]
+
+let evaluateTile brain world pos =
+    let genes = brain.Genes
+
+    let proxSquirrel = evaluateProximity world.Squirrel pos (getGene ActorGeneIndex.Squirrel genes)
+    let proxRabbit = evaluateProximity world.Rabbit pos (getGene ActorGeneIndex.Rabbit genes)
+    let proxDoggo = evaluateProximity world.Doggo pos (getGene ActorGeneIndex.Doggo genes)
+    let proxAcorn = evaluateProximity world.Acorn pos (getGene ActorGeneIndex.Acorn genes)
+    let proxTree = evaluateProximity world.Tree pos (getGene ActorGeneIndex.Tree genes)
+    let adjDoggo = evaluateAdjacentTo world.Doggo pos (getGene ActorGeneIndex.NextToDoggo genes)
+    let adjRabbit = evaluateAdjacentTo world.Rabbit pos (getGene ActorGeneIndex.NextToRabbit genes)
+
+    proxSquirrel + proxRabbit + proxDoggo + proxAcorn + proxTree + adjDoggo + adjRabbit

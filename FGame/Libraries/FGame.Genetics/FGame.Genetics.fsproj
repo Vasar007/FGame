@@ -11,24 +11,15 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>4.7</LangVersion>
-    <RootNamespace>FGame.DomainLogic</RootNamespace>
+    <RootNamespace>FGame.Genetics</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Commands.fs" />
-    <Compile Include="WorldPos.fs" />
-    <Compile Include="Actors.fs" />
-    <Compile Include="World.fs" />
-    <Compile Include="States.fs" />
     <Compile Include="Genes.fs" />
-    <Compile Include="Fitness.fs" />
-    <Compile Include="WorldGeneration.fs" />
-    <Compile Include="Simulator.fs" />
-    <Compile Include="Population.fs" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FGame.Genetics\FGame.Genetics.fsproj" />
+    <PackageReference Include="GeneticSharp" Version="2.6.0" />
   </ItemGroup>
 
 </Project>

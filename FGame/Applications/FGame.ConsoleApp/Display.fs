@@ -1,7 +1,7 @@
 ﻿module FGame.ConsoleApp.Display
 
 open System
-open FGame.DomainLogic.Simulator
+open FGame.DomainLogic.States
 open FGame.DomainLogic.World
 
 

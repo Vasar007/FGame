@@ -5,6 +5,7 @@ open Xunit
 open FGame.DomainLogic.Actors
 open FGame.DomainLogic.Commands
 open FGame.DomainLogic.Simulator
+open FGame.DomainLogic.States
 open FGame.DomainLogic.World
 open FGame.DomainLogic.WorldGeneration
 open FGame.DomainLogic.WorldPos

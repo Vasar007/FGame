@@ -16,7 +16,7 @@ namespace FGame.WindowsApp.ViewModels
         private readonly UserGameStrategy _gameStrategy;
 
         // Initialize this field inside Reset call in ctor.
-        private Simulator.GameState _state = default!;
+        private States.GameState _state = default!;
 
         public ICommand MoveCommand { get; }
 

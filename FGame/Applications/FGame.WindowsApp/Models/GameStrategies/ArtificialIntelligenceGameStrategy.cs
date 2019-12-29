@@ -15,7 +15,7 @@ namespace FGame.WindowsApp.Models.GameStrategies
             _random = random.ThrowIfNull(nameof(random));
         }
 
-        public Simulator.GameState Move(Simulator.GameState currentState, BrainInfoViewModel brain)
+        public States.GameState Move(States.GameState currentState, BrainInfoViewModel brain)
         {
             currentState.ThrowIfNull(nameof(currentState));
             brain.ThrowIfNull(nameof(brain));
@@ -23,16 +23,16 @@ namespace FGame.WindowsApp.Models.GameStrategies
             return Simulator.handleChromosomeMove(currentState, _random, brain.Model);
         }
 
-        public Simulator.GameState Reset(Simulator.GameState? currentState)
+        public States.GameState Reset(States.GameState? currentState)
         {
             return CreateDefaultState();
         }
 
-        private static Simulator.GameState CreateDefaultState()
+        private static States.GameState CreateDefaultState()
         {
             World.World world = WorldGeneration.makeDefaultWorld();
             const int turnsLeft = 30;
-            return new Simulator.GameState(world, Simulator.SimulationState.Simulating, turnsLeft);
+            return new States.GameState(world, States.SimulationState.Simulating, turnsLeft);
         }
     }
 }

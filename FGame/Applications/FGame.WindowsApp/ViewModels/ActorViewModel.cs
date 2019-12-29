@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using FGame.DomainLogic;
+using FGame.WindowsApp.Domain;
 
 namespace FGame.WindowsApp.ViewModels
 {
@@ -10,6 +11,7 @@ namespace FGame.WindowsApp.ViewModels
 
         // Subtract 1 since data's indexes start at 1 instead of 0.
         public int PosX => (_actor.Pos.X - 1) * 10;
+
         public int PosY => (_actor.Pos.Y - 1) * 10;
 
         public string Text => Actors.getChar(_actor).ToString();
@@ -19,13 +21,13 @@ namespace FGame.WindowsApp.ViewModels
 
         public ActorViewModel(Actors.Actor actor)
         {
-            _actor = actor ?? throw new ArgumentNullException(nameof(actor));
+            _actor = actor.ThrowIfNull(nameof(actor));
         }
 
         private string? FindImagePath()
         {
             string assemblyName = typeof(ActorViewModel).Assembly.GetName().Name
-                    ?? throw new InvalidOperationException("Cannnot get assembly name.");
+                ?? throw new InvalidOperationException("Cannnot get assembly name.");
 
             // https://stackoverflow.com/a/2416464/8581036
             string imageUriSourceFirstPart = $"/{assemblyName};component/";
