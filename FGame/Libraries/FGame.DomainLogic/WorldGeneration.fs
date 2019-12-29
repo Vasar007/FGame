@@ -55,6 +55,10 @@ let makeWorld (maxX: int32, maxY: int32) (getRandom: int32 -> int32) =
         Doggo    = actors.[4]
     }
 
+let makeWorlds (random: System.Random) (count: int) = 
+    Seq.init count (fun _ -> makeWorld (maxPos.X, maxPos.Y) (transformRandom random))
+    |> Seq.toList
+
 let makeDefaultWorld() =
     makeWorld (maxPos.X, maxPos.Y) createDefaultRandom
 

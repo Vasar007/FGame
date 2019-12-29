@@ -41,18 +41,20 @@ namespace FGame.WindowsApp.ViewModels
         {
             _state = _gameStrategy.Move(_state, direction);
 
-            _eventAggregator
-                  .GetEvent<UpdateGameStateMessage>()
-                  .Publish(_state);
+            //var newBrain = new SimulationResultViewModel();
+
+            //_eventAggregator
+            //      .GetEvent<UpdateBrainMessage>()
+            //      .Publish(_state);
         }
 
         private void Reset()
         {
             _state = _gameStrategy.Reset(_state);
 
-            _eventAggregator
-                .GetEvent<UpdateGameStateMessage>()
-                .Publish(_state);
+            //_eventAggregator
+            //    .GetEvent<UpdateBrainMessage>()
+            //    .Publish(_state);
         }
     }
 }

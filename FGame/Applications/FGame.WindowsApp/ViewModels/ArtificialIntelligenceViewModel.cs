@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 using Prism.Commands;
 using Prism.Events;
@@ -18,28 +21,32 @@ namespace FGame.WindowsApp.ViewModels
 
         private readonly Random _random;
 
-        // Initialize this field inside Reset call in ctor.
-        private States.GameState _state = default!;
-
-        // Initialize this field inside RandomizeBrain call in ctor.
-        private BrainInfoViewModel _brain = default!;
-        public BrainInfoViewModel Brain
+        private SimulationResultViewModel? _brain;
+        public SimulationResultViewModel? SelectedBrain
         {
             get => _brain;
             set
             {
                 if (_brain != value)
                 {
-                    SetProperty(ref _brain, value.ThrowIfNull(nameof(value)));
+                    SetProperty(ref _brain, value);
+
+                    _eventAggregator
+                        .GetEvent<UpdateBrainMessage>()
+                        .Publish(_brain);
                 }
             }
         }
 
+        public ICommand ResetCommand { get; }
+
         public ICommand RandomizeCommand { get; }
         
-        public ICommand BrainCommand { get; }
+        public ICommand AdvanceCommand { get; }
 
-        public ICommand ResetCommand { get; }
+        public ICommand Advance10Command { get; }
+
+        public ObservableCollection<SimulationResultViewModel> Population { get; }
 
 
         public ArtificialIntelligenceViewModel(
@@ -50,37 +57,56 @@ namespace FGame.WindowsApp.ViewModels
             _random = new Random();
             _gameStrategy = new ArtificialIntelligenceGameStrategy(_random);
 
-            RandomizeCommand = new DelegateCommand(RandomizeBrain);
-            BrainCommand = new DelegateCommand(Move);
+            Population = new ObservableCollection<SimulationResultViewModel>();
+
             ResetCommand = new DelegateCommand(Reset);
+            RandomizeCommand = new DelegateCommand(RandomizeWorlds);
+            AdvanceCommand = new DelegateCommand(AdvanceToNextGeneration);
+            Advance10Command = new DelegateCommand(AdvanceToNext10Generation);
 
-            RandomizeBrain();
-
-            // Call reset method to update UI controls.
-            Reset();
+            // Call this method to update UI controls.
+            RandomizeBrains();
         }
 
-        private void RandomizeBrain()
+        private void UpdatePopulation(IEnumerable<GeneticModels.SimulationResult> generation)
         {
-            Brain = new BrainInfoViewModel(GeneticModels.getRandomChromosome(_random));
+            Population.Clear();
+            foreach (var result in generation)
+            {
+                Population.Add(new SimulationResultViewModel(result));
+            }
+
+            SelectedBrain = Population.First();
         }
 
-        private void Move()
+        private void RandomizeWorlds()
         {
-            _state = _gameStrategy.Move(_state, Brain);
+            var result = _gameStrategy.RandomizeWorlds(Population);
+            UpdatePopulation(result);
+        }
 
-            _eventAggregator
-                  .GetEvent<UpdateGameStateMessage>()
-                  .Publish(_state);
+        private void RandomizeBrains()
+        {
+            var result = _gameStrategy.RandomizeBrains();
+            UpdatePopulation(result);
         }
 
         private void Reset()
         {
-            _state = _gameStrategy.Reset(_state);
+            RandomizeWorlds();
+            RandomizeBrains();
+        }
 
-            _eventAggregator
-                .GetEvent<UpdateGameStateMessage>()
-                .Publish(_state);
+        private void AdvanceToNextGeneration()
+        {
+            var generation = _gameStrategy.AdvanceToNextGeneration(Population);
+            UpdatePopulation(generation);
+        }
+
+        private void AdvanceToNext10Generation()
+        {
+            var generation = _gameStrategy.AdvanceToNext10Generation(Population);
+            UpdatePopulation(generation);
         }
     }
 }

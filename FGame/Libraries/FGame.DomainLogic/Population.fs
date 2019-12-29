@@ -5,21 +5,24 @@ open FGame.Models.World
 open FGame.Models.GeneticModels
 
 
+let defaultGenerationNumber = 20
+
 let simulateGeneration states actors =
     actors 
     |> Seq.map (fun b -> simulate b states) 
     |> Seq.sortByDescending (fun r -> r.TotalScore)
 
 let buildInitialPopulation random =
-    Seq.init<ActorChromosome> 20 (fun _ -> getRandomChromosome random)
+    Seq.init<ActorChromosome> defaultGenerationNumber (fun _ -> getRandomChromosome random)
 
 let simulateFirstGeneration states random =
     buildInitialPopulation random
     |> simulateGeneration states
 
-let mutateBrains (random: System.Random, brains: list<ActorChromosome>) =
-    let numBrains = brains.Length
-    let survivors = [ brains.[0]; brains.[1]; ]
+let mutateBrains (random: System.Random, brains: seq<ActorChromosome>) =
+    let brainsList = brains |> Seq.toList
+    let numBrains = brainsList.Length
+    let survivors = [ brainsList.[0]; brainsList.[1]; ]
     let randos = Seq.init (numBrains - 4) (fun _ -> getRandomChromosome random)
                  |> Seq.toList
 
@@ -31,20 +34,19 @@ let mutateBrains (random: System.Random, brains: list<ActorChromosome>) =
     List.append children randos
     |> List.append survivors
 
-let mutateAndSimulateGeneration (random: System.Random, worlds: list<World>, results: list<SimulationResult>) =
+let mutateAndSimulateGeneration (random: System.Random, worlds: seq<World>, results: seq<SimulationResult>) =
     let brains = Seq.map (fun b -> b.Brain) results
                  |> Seq.toList
 
-    mutateBrains(random, brains)
+    mutateBrains (random, brains)
     |> simulateGeneration worlds
 
-let mutateAndSimulateMultiple (random: System.Random, worlds: list<World>, generations: int, results: list<SimulationResult>) =
+let mutateAndSimulateMultiple (random: System.Random, worlds: seq<World>, generations: int, results: seq<SimulationResult>) =
     let mutable currentResults = results
-    for _ = 1 to generations do    
+    for _ in 1..generations do
         let brains = Seq.map (fun b -> b.Brain) currentResults
-                     |> Seq.toList
 
-        currentResults <- mutateBrains(random, brains)
+        currentResults <- mutateBrains (random, brains)
                           |> simulateGeneration worlds
                           |> Seq.toList
 

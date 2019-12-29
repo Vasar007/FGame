@@ -7,9 +7,9 @@
         xmlns:viewModels="clr-namespace:FGame.WindowsApp.ViewModels"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
-        Title="{Binding Path=Title}"
+        Title="{Binding Path=Title, Mode=OneWay}"
         Height="650"
-        Width="755"
+        Width="725"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         Background="Black"
@@ -42,6 +42,7 @@
     <DockPanel>
         <!-- Status Bar -->
         <StatusBar DockPanel.Dock="Bottom"
+                   DataContext="{Binding Path=SelectedBrain.SelectedState}"
                    Background="{Binding Path=GameStatusBrush}"
                    FontWeight="Bold">
             <StatusBarItem>
@@ -58,46 +59,92 @@
         </DockPanel>
 
         <!-- Main UI -->
-        <Grid Margin="10"
-              Background="Green">
-            <Image Source="../Resources/Grass.png"
-                   Stretch="Fill"
-                   HorizontalAlignment="Stretch"
-                   VerticalAlignment="Stretch" />
-            <Viewbox Stretch="Uniform">
-                <Border BorderThickness="1"
-                        BorderBrush="DarkGreen">
-                    <ItemsControl ItemsSource="{Binding Path=Actors}"
-                                  Width="130"
-                                  Height="130">
-                        <ItemsControl.ItemTemplate>
-                            <ItemContainerTemplate>
-                                <Border BorderBrush="Black"
-                                        BorderThickness="1">
-                                    <Image Source="{Binding Path=ImagePath}"
-                                           Width="10"
-                                           Height="10"
-                                           Stretch="Fill" />
-                                </Border>
-                            </ItemContainerTemplate>
-                        </ItemsControl.ItemTemplate>
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <Canvas />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemContainerStyle>
-                            <Style TargetType="ContentPresenter">
-                                <Setter Property="Canvas.Left"
-                                        Value="{Binding Path=PosX}" />
-                                <Setter Property="Canvas.Top"
-                                        Value="{Binding Path=PosY}" />
-                            </Style>
-                        </ItemsControl.ItemContainerStyle>
-                    </ItemsControl>
-                </Border>
-            </Viewbox>
-        </Grid>
+        <DockPanel DataContext="{Binding Path=SelectedBrain}">
+
+            <!-- Time Control -->
+            <DockPanel DockPanel.Dock="Bottom"
+                       Margin="10">
+                <TextBlock DockPanel.Dock="Left"
+                           Margin="0 0 10 0">
+                    Time Index
+                </TextBlock>
+
+                <Slider Minimum="0"
+                        Maximum="{Binding Path=MaxStateIndex}"
+                        Value="{Binding Path=CurrentIndex}" />
+            </DockPanel>
+
+            <Grid Margin="10"
+                  Background="Green"
+                  DataContext="{Binding Path=SelectedState}">
+                <Image Source="../Resources/Grass.png"
+                       Stretch="Fill"
+                       HorizontalAlignment="Stretch"
+                       VerticalAlignment="Stretch" />
+                <Viewbox Stretch="Uniform">
+                    <Grid>
+                        <ItemsControl ItemsSource="{Binding Path=Actors}"
+                                      Width="150"
+                                      Height="150"
+                                      Panel.ZIndex="1">
+                            <ItemsControl.ItemTemplate>
+                                <ItemContainerTemplate>
+                                    <Border BorderBrush="Black"
+                                            BorderThickness="1">
+                                        <Image Source="{Binding Path=ImagePath}"
+                                               Width="10"
+                                               Height="10"
+                                               Stretch="Fill" />
+                                    </Border>
+                                </ItemContainerTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemContainerStyle>
+                                <Style TargetType="ContentPresenter">
+                                    <Setter Property="Canvas.Left"
+                                            Value="{Binding Path=PosX}" />
+                                    <Setter Property="Canvas.Top"
+                                            Value="{Binding Path=PosY}" />
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                        </ItemsControl>
+
+                        <ItemsControl ItemsSource="{Binding Path=HeatMap}"
+                                      Visibility="{Binding RelativeSource={RelativeSource AncestorType=DockPanel}, Path=DataContext.ShowHeatMap, Converter={StaticResource ResourceKey=VisibilityConverter}}"
+                                      Width="150"
+                                      Height="150">
+                            <ItemsControl.ItemTemplate>
+                                <ItemContainerTemplate>
+                                    <Border Background="{Binding Path=Fill}"
+                                            ToolTip="{Binding Path=Text}"
+                                            Opacity="0.5"
+                                            Width="10"
+                                            Height="10" />
+                                </ItemContainerTemplate>
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Canvas />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemContainerStyle>
+                                <Style TargetType="ContentPresenter">
+                                    <Setter Property="Canvas.Left"
+                                            Value="{Binding Path=PosX}" />
+                                    <Setter Property="Canvas.Top"
+                                            Value="{Binding Path=PosY}" />
+                                </Style>
+                            </ItemsControl.ItemContainerStyle>
+                        </ItemsControl>
+                    </Grid>
+                </Viewbox>
+            </Grid>
+
+        </DockPanel>
     </DockPanel>
 
 </Window>

@@ -192,7 +192,7 @@ let handleChromosomeMove (state: GameState) (random: System.Random) (chromosome:
                        |> Seq.sortBy(fun pos -> evaluateTile chromosome state.World pos)
                        |> Seq.head
         let newState = moveActor state state.World.Squirrel movedPos
-        simulateActors newState random.Next
+        simulateActors newState (transformRandom random)
     else
         state
 
@@ -204,7 +204,7 @@ let buildStartingStateForWorld world =
     }
 
 let buildStartingState (random: System.Random) = 
-    makeWorld (15, 15) random.Next
+    makeWorld (maxPos.X, maxPos.Y) random.Next
     |> buildStartingStateForWorld
 
 let simulateIndividualGame random brain fitnessFunction world =

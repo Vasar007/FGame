@@ -8,24 +8,50 @@
              mc:Ignorable="d" 
              d:DataContext="{d:DesignInstance viewModels:ArtificialIntelligenceViewModel}">
 
-    <Border DockPanel.Dock="Right"
-            Width="150">
-        <StackPanel Margin="0 8 12 0">
-            <Button Style="{DynamicResource ResourceKey=CommandButtonStyle}"
-                    Command="{Binding Path=BrainCommand}">
-                AI Move
-            </Button>
-            <Button Style="{DynamicResource ResourceKey=CommandButtonStyle}"
-                    Command="{Binding Path=RandomizeCommand}">
-                Randomize Brain
-            </Button>
-            <Button Style="{DynamicResource ResourceKey=CommandButtonStyle}"
-                    Command="{Binding Path=ResetCommand}">
-                Restart
+    <DockPanel DockPanel.Dock="Right"
+               Width="150"
+               Margin="0 0 8 8">
+        <StackPanel Margin="0 8 0 0"
+                    DockPanel.Dock="Top">
+            <Button Margin="0 5"
+                    Command="{Binding Path=AdvanceCommand}">
+                Next Generation
             </Button>
 
-            <local:BrainInfoView DataContext="{Binding Path=Brain}" />
+            <Button Margin="0 5"
+                    Command="{Binding Path=Advance10Command}">
+                Next 10 Generations
+            </Button>
+
+            <Button Margin="0 5"
+                    Command="{Binding Path=RandomizeCommand}">
+                Randomize Worlds
+            </Button>
+
+            <Button Margin="0 5"
+                    Command="{Binding Path=ResetCommand}">
+                Reset
+            </Button>
+
+            <CheckBox IsChecked="{Binding Path=SelectedBrain.ShowHeatMap}"
+                      x:Name="CheckShowHeatMap"
+                      Foreground="White">
+                Show Tile Attractiveness
+            </CheckBox>
         </StackPanel>
-    </Border>
+
+        <TextBlock DockPanel.Dock="Top"
+                   FontWeight="Bold"
+                   Margin="0,10">
+            Population
+        </TextBlock>
+
+        <local:BrainInfoView DockPanel.Dock="Bottom" 
+                             DataContext="{Binding Path=SelectedBrain.Brain}" />
+
+        <ListBox ItemsSource="{Binding Path=Population}"
+                 SelectedItem="{Binding Path=SelectedBrain}"
+                 DisplayMemberPath="DisplayText" />
+    </DockPanel>
 
 </UserControl>

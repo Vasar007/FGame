@@ -8,20 +8,20 @@ namespace FGame.WindowsApp.ViewModels
     {
         public GeneticModels.ActorChromosome Model { get; }
 
-        public double SquirrelPriority => GetGene(GeneticModels.ActorGeneIndex.Squirrel);
+        public double AcornPriority => GetGene(GeneticModels.ActorGeneIndex.Acorn);
 
         public double DoggoPriority => GetGene(GeneticModels.ActorGeneIndex.Doggo);
+
+        public double NextToDoggoPriority => GetGene(GeneticModels.ActorGeneIndex.NextToDoggo);
         
         public double RabbitPriority => GetGene(GeneticModels.ActorGeneIndex.Rabbit);
         
-        public double AcornPriority => GetGene(GeneticModels.ActorGeneIndex.Acorn);
-        
-        public double TreePriority => GetGene(GeneticModels.ActorGeneIndex.Tree);
-        
-        public double NextToDoggoPriority => GetGene(GeneticModels.ActorGeneIndex.NextToDoggo);
-        
         public double NextToRabbitPriority => GetGene(GeneticModels.ActorGeneIndex.NextToRabbit);
 
+        public double SquirrelPriority => GetGene(GeneticModels.ActorGeneIndex.Squirrel);
+
+        public double TreePriority => GetGene(GeneticModels.ActorGeneIndex.Tree);
+        
 
         public BrainInfoViewModel(GeneticModels.ActorChromosome brain)
         {
