@@ -1,20 +1,23 @@
 ﻿module FGame.DomainLogic.Fitness
 
+open FGame.Models.Actors
 open FGame.Models.States
 
+
+let private getAcornBonus (state: GameState) =
+    match state.World.Squirrel.Kind with 
+        | Squirrel true -> 100.0
+        | _             -> 0.0
 
 let evaluateFitness (gameStates: list<GameState>, fitnessFunction) =
     fitnessFunction gameStates
 
 let standardFitnessFunction (gameStates: list<GameState>) =
-    let lastState: GameState = Seq.last gameStates
+    let (lastState: GameState) = Seq.last gameStates
 
     let gameLength = float gameStates.Length
 
-    let gotAcornBonus = 
-        match lastState.World.Acorn.IsActive with 
-            | true  -> 100.0 
-            | false -> 0.0
+    let gotAcornBonus = getAcornBonus lastState
 
     let finalStateBonus =
         match lastState.SimState with
@@ -24,14 +27,11 @@ let standardFitnessFunction (gameStates: list<GameState>) =
     gotAcornBonus + finalStateBonus
 
 let killRabbitFitnessFunction (gameStates: list<GameState>) =
-    let lastState: GameState = Seq.last gameStates
+    let (lastState: GameState) = Seq.last gameStates
 
     let gameLength = float gameStates.Length
 
-    let gotAcornBonus = 
-        match lastState.World.Acorn.IsActive with 
-            | true  -> 100.0 
-            | false -> 0.0
+    let gotAcornBonus = getAcornBonus lastState
 
     let isRabbitAlive = lastState.World.Rabbit.IsActive
 

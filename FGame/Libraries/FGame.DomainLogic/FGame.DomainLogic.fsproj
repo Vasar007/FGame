@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FGame.Genetics\FGame.Genetics.fsproj" />
     <ProjectReference Include="..\FGame.Models\FGame.Models.fsproj" />
   </ItemGroup>
 
