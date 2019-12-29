@@ -1,4 +1,4 @@
-﻿module FGame.DomainLogic.Commands
+﻿module FGame.Models.Commands
 
 type GameCommand =
     | MoveLeft

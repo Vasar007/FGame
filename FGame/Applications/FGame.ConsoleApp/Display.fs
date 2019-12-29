@@ -1,8 +1,8 @@
 ﻿module FGame.ConsoleApp.Display
 
 open System
-open FGame.DomainLogic.States
-open FGame.DomainLogic.World
+open FGame.Models.States
+open FGame.Models.World
 
 
 let printCell cellChar isLastCell =

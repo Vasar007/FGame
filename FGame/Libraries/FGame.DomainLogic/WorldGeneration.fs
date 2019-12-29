@@ -1,8 +1,8 @@
 ﻿module FGame.DomainLogic.WorldGeneration
 
-open FGame.DomainLogic.Actors
-open FGame.DomainLogic.World
-open FGame.DomainLogic.WorldPos
+open FGame.Models.Actors
+open FGame.Models.World
+open FGame.Models.WorldPos
 
 
 let hasInvalidPlacedItems (items: seq<Actor>) (maxX: int32) (maxY: int32) =

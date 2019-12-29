@@ -1,5 +1,5 @@
 ﻿using Prism.Events;
-using FGame.DomainLogic;
+using FGame.Models;
 
 namespace FGame.WindowsApp.Domain.Messages
 {

@@ -2,7 +2,7 @@
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
-using FGame.DomainLogic;
+using FGame.Models;
 using FGame.WindowsApp.Domain;
 using FGame.WindowsApp.Domain.Messages;
 using FGame.WindowsApp.Models.GameStrategies;

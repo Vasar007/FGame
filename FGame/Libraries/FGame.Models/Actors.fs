@@ -1,6 +1,6 @@
-﻿module FGame.DomainLogic.Actors
+﻿module FGame.Models.Actors
 
-open FGame.DomainLogic.WorldPos
+open FGame.Models.WorldPos
 
 
 type ActorKind =

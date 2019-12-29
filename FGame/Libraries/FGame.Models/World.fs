@@ -1,7 +1,7 @@
-﻿module FGame.DomainLogic.World
+﻿module FGame.Models.World
 
-open FGame.DomainLogic.Actors
-open FGame.DomainLogic.WorldPos
+open FGame.Models.Actors
+open FGame.Models.WorldPos
 
 
 type World =
@@ -38,6 +38,6 @@ let isValidPos (pos: WorldPos) (world: World) =
     pos.X <= world.MaxX &&
     pos.Y <= world.MaxY
 
-let hasObstacle pos (world: World) : bool =
+let hasObstacle pos (world: World) =
     world.Actors
     |> Seq.exists(fun actor -> pos = actor.Pos)

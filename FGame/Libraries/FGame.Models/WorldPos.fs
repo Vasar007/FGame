@@ -1,4 +1,4 @@
-﻿module FGame.DomainLogic.WorldPos
+﻿module FGame.Models.WorldPos
 
 open System
 

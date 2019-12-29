@@ -1,6 +1,6 @@
 ﻿module FGame.DomainLogic.Fitness
 
-open FGame.DomainLogic.States
+open FGame.Models.States
 
 
 let evaluateFitness (gameStates: list<GameState>, fitnessFunction) =

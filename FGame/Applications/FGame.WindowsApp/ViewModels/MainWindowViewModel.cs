@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Prism.Mvvm;
 using Prism.Events;
-using FGame.DomainLogic;
+using FGame.Models;
 using FGame.WindowsApp.Domain;
 using FGame.WindowsApp.Domain.Messages;
 using FGame.WindowsApp.Models;

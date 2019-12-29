@@ -1,13 +1,13 @@
 ﻿module FGame.DomainLogic.Simulator
 
-open FGame.DomainLogic.Actors
-open FGame.DomainLogic.Commands
 open FGame.DomainLogic.Fitness
-open FGame.DomainLogic.Genes
-open FGame.DomainLogic.States
-open FGame.DomainLogic.World
-open FGame.DomainLogic.WorldPos
 open FGame.DomainLogic.WorldGeneration
+open FGame.Models.Actors
+open FGame.Models.Commands
+open FGame.Models.GeneticModels
+open FGame.Models.States
+open FGame.Models.World
+open FGame.Models.WorldPos
 
 
 let stepSize = 1
@@ -207,7 +207,7 @@ let buildStartingState (random: System.Random) =
     makeWorld (15, 15) random.Next
     |> buildStartingStateForWorld
 
-let simulateIndividualGame random brain fitnessFunction world: IndividualWorldResult =
+let simulateIndividualGame random brain fitnessFunction world =
     let gameStates = ResizeArray<GameState>()
     gameStates.Add(world)
     let mutable currentState = world

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using FGame.DomainLogic;
+using FGame.Models;
 using FGame.WindowsApp.Domain;
 
 namespace FGame.WindowsApp.ViewModels

@@ -1,4 +1,5 @@
 ﻿using FGame.DomainLogic;
+using FGame.Models;
 using FGame.WindowsApp.Domain;
 
 namespace FGame.WindowsApp.Models.GameStrategies

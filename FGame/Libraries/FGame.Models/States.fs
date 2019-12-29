@@ -1,6 +1,6 @@
-﻿module FGame.DomainLogic.States
+﻿module FGame.Models.States
 
-open FGame.DomainLogic.World
+open FGame.Models.World
 
 
 type SimulationState =

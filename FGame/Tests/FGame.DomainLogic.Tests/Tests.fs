@@ -2,13 +2,13 @@ module FGame.DomainLogic.Tests.Tests
 
 open FsUnit
 open Xunit
-open FGame.DomainLogic.Actors
-open FGame.DomainLogic.Commands
 open FGame.DomainLogic.Simulator
-open FGame.DomainLogic.States
-open FGame.DomainLogic.World
 open FGame.DomainLogic.WorldGeneration
-open FGame.DomainLogic.WorldPos
+open FGame.Models.Actors
+open FGame.Models.Commands
+open FGame.Models.States
+open FGame.Models.World
+open FGame.Models.WorldPos
 
 
 let getRandomNumber (max: int32) =

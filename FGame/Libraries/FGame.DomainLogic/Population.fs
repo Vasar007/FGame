@@ -1,8 +1,8 @@
 ﻿module FGame.DomainLogic.Population
 
-open FGame.DomainLogic.Genes
 open FGame.DomainLogic.Simulator
-open FGame.DomainLogic.World
+open FGame.Models.World
+open FGame.Models.GeneticModels
 
 
 let simulateGeneration states actors =

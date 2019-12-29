@@ -1,7 +1,7 @@
 ﻿module FGame.ConsoleApp.Input
 
 open System
-open FGame.DomainLogic.Commands
+open FGame.Models.Commands
 
 
 type Command =

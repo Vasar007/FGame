@@ -3,9 +3,9 @@
 open FGame.ConsoleApp.Display
 open FGame.ConsoleApp.Input
 open FGame.DomainLogic.Simulator
-open FGame.DomainLogic.States
 open FGame.DomainLogic.WorldGeneration
-open FGame.DomainLogic.WorldPos
+open FGame.Models.States
+open FGame.Models.WorldPos
 
 
 [<EntryPoint>]

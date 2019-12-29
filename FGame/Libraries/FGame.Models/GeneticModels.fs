@@ -1,9 +1,9 @@
-﻿module FGame.DomainLogic.Genes
+﻿module FGame.Models.GeneticModels
 
-open FGame.DomainLogic.Actors
-open FGame.DomainLogic.States
-open FGame.DomainLogic.World
-open FGame.DomainLogic.WorldPos
+open FGame.Models.Actors
+open FGame.Models.States
+open FGame.Models.World
+open FGame.Models.WorldPos
 
 
 type ActorGeneIndex =
@@ -49,7 +49,7 @@ let mutateGenes (random: System.Random) mutationChance genes =
     List.map (
         fun g ->
             if random.NextDouble() <= mutationChance then
-                mutate(random, 0.5, g)
+                mutate (random, 0.5, g)
             else
                 g
     ) genes
@@ -112,3 +112,4 @@ let evaluateTile brain world pos =
     let adjRabbit = evaluateAdjacentTo world.Rabbit pos (getGene ActorGeneIndex.NextToRabbit genes)
 
     proxSquirrel + proxRabbit + proxDoggo + proxAcorn + proxTree + adjDoggo + adjRabbit
+

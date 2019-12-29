@@ -3,7 +3,7 @@ using System.Windows.Input;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
-using FGame.DomainLogic;
+using FGame.Models;
 using FGame.WindowsApp.Domain;
 using FGame.WindowsApp.Domain.Messages;
 using FGame.WindowsApp.Models.GameStrategies;
@@ -62,7 +62,7 @@ namespace FGame.WindowsApp.ViewModels
 
         private void RandomizeBrain()
         {
-            Brain = new BrainInfoViewModel(Genes.getRandomChromosome(_random));
+            Brain = new BrainInfoViewModel(GeneticModels.getRandomChromosome(_random));
         }
 
         private void Move()
