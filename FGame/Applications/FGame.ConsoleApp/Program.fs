@@ -23,17 +23,18 @@ let main _ =
                 SimState = SimulationState.Simulating
                 TurnsLeft = 30
             }
-            let mutable (simulating: bool) = true
+            let mutable simulating = true
 
             while simulating do
                 let userCommand = getUserInput(state) |> tryParseInput
-            
+
                 match userCommand with
                     | Some command -> 
                         match command with 
                             | Exit               -> simulating <- false
                             | Action gameCommand -> state <- playTurn state getRandomNumber gameCommand
-                    | None -> printfn "Invalid input."
+                    | None ->
+                        printfn "Invalid input."
 
             0 // return an integer exit code.
         with

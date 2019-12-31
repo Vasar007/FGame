@@ -98,7 +98,9 @@ let evaluateAdjacentTo actor pos weight =
         0.0
 
 let getGene (geneIndex: ActorGeneIndex) (genes: list<double>) =
-    genes.[int geneIndex]
+    match genes |> List.tryItem (int geneIndex) with
+        | Some gene -> gene
+        | None      -> 0.0
 
 let evaluateTile brain world pos =
     let genes = brain.Genes

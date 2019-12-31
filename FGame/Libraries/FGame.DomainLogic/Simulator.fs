@@ -10,8 +10,12 @@ open FGame.Models.World
 open FGame.Models.WorldPos
 
 
+// Some Predefined Parameters.
+
 let stepSize = 1
 let defaultTurnsLeft = 30
+
+// Common Simulation Logic.
 
 let canEnterActorCell (actor: ActorKind) (target: ActorKind) =
     match target with
@@ -170,7 +174,7 @@ let playTurn (state: GameState) (getRandomNumber: int32 -> int32) (command: Game
                 SimState = SimulationState.Simulating
                 TurnsLeft = defaultTurnsLeft
             }
-        | _       ->
+        | _ ->
             match state.SimState with
                 | SimulationState.Simulating -> 
                     let newState = handlePlayerCommand state command 
@@ -184,6 +188,7 @@ let simulateTurn state command =
             simulateActors newState createDefaultRandom
         | _ -> state
 
+// Genetic Simulation Functions.
 
 let handleChromosomeMove (state: GameState) (random: System.Random) (chromosome: ActorChromosome) =
     if state.SimState = SimulationState.Simulating then

@@ -114,7 +114,8 @@
                         </ItemsControl>
 
                         <ItemsControl ItemsSource="{Binding Path=HeatMap}"
-                                      Visibility="{Binding RelativeSource={RelativeSource AncestorType=DockPanel}, Path=DataContext.ShowHeatMap, Converter={StaticResource ResourceKey=VisibilityConverter}}"
+                                      Visibility="{Binding RelativeSource={RelativeSource AncestorType=DockPanel},
+                                                   Path=DataContext.ShowHeatMap, Converter={StaticResource ResourceKey=VisibilityConverter}}"
                                       Width="150"
                                       Height="150">
                             <ItemsControl.ItemTemplate>

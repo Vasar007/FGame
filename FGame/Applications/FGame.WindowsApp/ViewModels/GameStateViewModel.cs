@@ -12,13 +12,13 @@ namespace FGame.WindowsApp.ViewModels
     /// </summary>
     internal sealed class GameStateViewModel : BindableBase
     {
-        private readonly States.GameState _state;
+        public States.GameState State { get; }
 
         public ICollection<ActorViewModel> Actors { get; }
 
         public ICollection<HeatMapViewModel> HeatMap { get; }
 
-        public string GameStatusText => _state.SimState switch
+        public string GameStatusText => State.SimState switch
         {
             States.SimulationState.Won  => "Won",
 
@@ -27,7 +27,7 @@ namespace FGame.WindowsApp.ViewModels
             _                           => "Simulating"
         };
 
-        public Brush GameStatusBrush => _state.SimState switch
+        public Brush GameStatusBrush => State.SimState switch
         {
             States.SimulationState.Won  => Brushes.MediumSeaGreen,
 
@@ -36,14 +36,14 @@ namespace FGame.WindowsApp.ViewModels
             _                           => Brushes.LightGray
         };
 
-        public string TurnsLeftText => _state.TurnsLeft == 1
+        public string TurnsLeftText => State.TurnsLeft == 1
             ? "1 Turn Left"
-            : $"{_state.TurnsLeft.ToString()} Turns Left";
+            : $"{State.TurnsLeft.ToString()} Turns Left";
 
 
         public GameStateViewModel(States.GameState state, GeneticModels.ActorChromosome brain)
         {
-            _state = state.ThrowIfNull(nameof(state));
+            State = state.ThrowIfNull(nameof(state));
             brain.ThrowIfNull(nameof(brain));
 
             Actors = CreateActors(state);

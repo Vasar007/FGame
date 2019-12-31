@@ -31,9 +31,12 @@ namespace FGame.WindowsApp.ViewModels
                 {
                     SetProperty(ref _brain, value);
 
+                    // Disable warning because receiver should be able to process null values.
+#pragma warning disable CS8604 // Possible null reference argument.
                     _eventAggregator
                         .GetEvent<UpdateBrainMessage>()
                         .Publish(_brain);
+#pragma warning restore CS8604 // Possible null reference argument.
                 }
             }
         }

@@ -1,4 +1,5 @@
-﻿using FGame.DomainLogic;
+﻿using Microsoft.FSharp.Collections;
+using FGame.DomainLogic;
 using FGame.Models;
 using FGame.WindowsApp.Domain;
 
@@ -10,7 +11,7 @@ namespace FGame.WindowsApp.Models.GameStrategies
         {
         }
 
-        public States.GameState Move(States.GameState currentState, string? direction)
+        public GeneticModels.SimulationResult Move(States.GameState currentState, string? direction)
         {
             // Parameter validation/cleansing.
             currentState.ThrowIfNull(nameof(currentState));
@@ -41,19 +42,44 @@ namespace FGame.WindowsApp.Models.GameStrategies
             };
 
             // Process the action and update our new state.
-            return Simulator.simulateTurn(currentState, command);
+            var newState = Simulator.simulateTurn(currentState, command);
+
+            return WrapStateToResult(newState);
         }
 
-        public States.GameState Reset(States.GameState? currentState)
+        public GeneticModels.SimulationResult Reset()
         {
-            return CreateDefaultState();
+            var defaultState = CreateDefaultState();
+
+            return WrapStateToResult(defaultState);
         }
 
         private static States.GameState CreateDefaultState()
         {
-            World.World world = WorldGeneration.makeDefaultWorld();
-            const int turnsLeft = 30;
-            return new States.GameState(world, States.SimulationState.Simulating, turnsLeft);
+            return new States.GameState(
+                WorldGeneration.makeDefaultWorld(),
+                States.SimulationState.Simulating,
+                Simulator.defaultTurnsLeft
+            );
+        }
+
+        private static GeneticModels.SimulationResult WrapStateToResult(States.GameState state)
+        {
+            // Use dirty trick with wrapping state into simulation result to use it in view.
+
+            var states = new FSharpList<States.GameState>(
+                state, FSharpList<States.GameState>.Empty
+            );
+
+            var indiviaualWorld = new GeneticModels.IndividualWorldResult(0.0, states);
+
+            var results = new FSharpList<GeneticModels.IndividualWorldResult>(
+                indiviaualWorld, FSharpList<GeneticModels.IndividualWorldResult>.Empty
+            );
+
+            var brain = new GeneticModels.ActorChromosome(FSharpList<double>.Empty, 0);
+
+            return new GeneticModels.SimulationResult(0.0, results, brain);
         }
     }
 }

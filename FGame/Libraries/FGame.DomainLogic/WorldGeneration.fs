@@ -24,7 +24,7 @@ let hasInvalidPlacedItems (items: seq<Actor>) (maxX: int32) (maxY: int32) =
 
     hasIssues
     
-let buildItemsArray (maxX: int32, maxY: int32, getRandom: int32 -> int32) =
+let buildItemsList (maxX: int32, maxY: int32, getRandom: int32 -> int32) =
     [
         { Pos = getRandomPos (maxX, maxY, getRandom); Kind = Squirrel false; IsActive = true }
         { Pos = getRandomPos (maxX, maxY, getRandom); Kind = Tree;           IsActive = true }
@@ -34,12 +34,12 @@ let buildItemsArray (maxX: int32, maxY: int32, getRandom: int32 -> int32) =
     ]
 
 let generate (maxX: int32, maxY: int32, getRandom: int32 -> int32) =
-    let mutable (items: list<Actor>) = buildItemsArray (maxX, maxY, getRandom)
+    let mutable (items: list<Actor>) = buildItemsList (maxX, maxY, getRandom)
 
     // It is possible to generate items in invalid starting configuration.
     // Make sure we do not do that.
     while hasInvalidPlacedItems items maxX maxY do
-        items <- buildItemsArray (maxX, maxY, getRandom)
+        items <- buildItemsList (maxX, maxY, getRandom)
 
     items
 

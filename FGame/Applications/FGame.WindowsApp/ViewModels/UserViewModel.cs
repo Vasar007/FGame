@@ -2,7 +2,6 @@
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
-using FGame.Models;
 using FGame.WindowsApp.Domain;
 using FGame.WindowsApp.Domain.Messages;
 using FGame.WindowsApp.Models.GameStrategies;
@@ -16,7 +15,7 @@ namespace FGame.WindowsApp.ViewModels
         private readonly UserGameStrategy _gameStrategy;
 
         // Initialize this field inside Reset call in ctor.
-        private States.GameState _state = default!;
+        private SimulationResultViewModel _result = default!;
 
         public ICommand MoveCommand { get; }
 
@@ -39,22 +38,22 @@ namespace FGame.WindowsApp.ViewModels
 
         private void Move(string? direction)
         {
-            _state = _gameStrategy.Move(_state, direction);
+            var simulationResult = _gameStrategy.Move(_result.SelectedState.State, direction);
+            _result = new SimulationResultViewModel(simulationResult);
 
-            //var newBrain = new SimulationResultViewModel();
-
-            //_eventAggregator
-            //      .GetEvent<UpdateBrainMessage>()
-            //      .Publish(_state);
+            _eventAggregator
+                .GetEvent<UpdateBrainMessage>()
+                .Publish(_result);
         }
 
         private void Reset()
         {
-            _state = _gameStrategy.Reset(_state);
+            var simulationResult = _gameStrategy.Reset();
+            _result = new SimulationResultViewModel(simulationResult);
 
-            //_eventAggregator
-            //    .GetEvent<UpdateBrainMessage>()
-            //    .Publish(_state);
+            _eventAggregator
+                .GetEvent<UpdateBrainMessage>()
+                .Publish(_result);
         }
     }
 }
