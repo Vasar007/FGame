@@ -1,4 +1,4 @@
-﻿module FGame.ConsoleApp.ConsoleApp
+﻿module FGame.ConsoleApp.Program
 
 open FGame.ConsoleApp.Display
 open FGame.ConsoleApp.Input
