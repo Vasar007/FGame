@@ -15,4 +15,4 @@ This project is licensed under the terms of the [Apache License 2.0](LICENSE).
 
 Copyright © 2020 Vasily Vasilyev (vasar007@yandex.ru)
 
-[License Apache License 2.0](https://github.com/Vasar007/Acolyte.NET/blob/master/LICENSE)
+License: [Apache License 2.0](https://github.com/Vasar007/Acolyte.NET/blob/master/LICENSE)
