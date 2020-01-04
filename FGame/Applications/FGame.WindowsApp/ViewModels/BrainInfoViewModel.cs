@@ -1,6 +1,6 @@
-﻿using FGame.Models;
-using FGame.WindowsApp.Domain;
+﻿using Acolyte.Assertions;
 using Prism.Mvvm;
+using FGame.Models;
 
 namespace FGame.WindowsApp.ViewModels
 {

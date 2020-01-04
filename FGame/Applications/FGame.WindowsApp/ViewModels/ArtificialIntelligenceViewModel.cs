@@ -7,9 +7,9 @@ using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using FGame.Models;
-using FGame.WindowsApp.Domain;
 using FGame.WindowsApp.Domain.Messages;
 using FGame.WindowsApp.Models.GameStrategies;
+using Acolyte.Assertions;
 
 namespace FGame.WindowsApp.ViewModels
 {

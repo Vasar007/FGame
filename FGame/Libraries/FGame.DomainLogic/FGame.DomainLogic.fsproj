@@ -22,6 +22,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Acolyte.NET" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\FGame.Models\FGame.Models.fsproj" />
   </ItemGroup>
 

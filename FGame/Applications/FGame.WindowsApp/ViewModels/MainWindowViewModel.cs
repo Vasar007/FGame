@@ -4,6 +4,7 @@ using Prism.Events;
 using FGame.WindowsApp.Domain;
 using FGame.WindowsApp.Domain.Messages;
 using FGame.WindowsApp.Models;
+using Acolyte.Assertions;
 
 namespace FGame.WindowsApp.ViewModels
 {

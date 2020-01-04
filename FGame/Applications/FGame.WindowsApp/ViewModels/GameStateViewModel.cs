@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
+using Acolyte.Assertions;
 using FGame.Models;
-using FGame.WindowsApp.Domain;
 using Prism.Mvvm;
 
 namespace FGame.WindowsApp.ViewModels

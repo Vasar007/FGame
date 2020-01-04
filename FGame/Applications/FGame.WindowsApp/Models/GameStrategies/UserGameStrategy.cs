@@ -1,7 +1,7 @@
 ﻿using Microsoft.FSharp.Collections;
 using FGame.DomainLogic;
 using FGame.Models;
-using FGame.WindowsApp.Domain;
+using Acolyte.Assertions;
 
 namespace FGame.WindowsApp.Models.GameStrategies
 {

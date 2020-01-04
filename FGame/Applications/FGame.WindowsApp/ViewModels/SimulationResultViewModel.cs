@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Prism.Mvvm;
 using FGame.Models;
-using FGame.WindowsApp.Domain;
+using Acolyte.Assertions;
 
 namespace FGame.WindowsApp.ViewModels
 {

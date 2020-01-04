@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Acolyte.Assertions;
 using FGame.DomainLogic;
 using FGame.Models;
-using FGame.WindowsApp.Domain;
 using FGame.WindowsApp.ViewModels;
 
 namespace FGame.WindowsApp.Models.GameStrategies

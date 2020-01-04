@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
+using Acolyte.Assertions;
 using FGame.Models;
-using FGame.WindowsApp.Domain;
 
 namespace FGame.WindowsApp.ViewModels
 {

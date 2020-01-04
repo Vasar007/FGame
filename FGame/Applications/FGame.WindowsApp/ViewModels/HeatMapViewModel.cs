@@ -2,7 +2,7 @@
 using System.Windows.Media;
 using Prism.Mvvm;
 using FGame.Models;
-using FGame.WindowsApp.Domain;
+using Acolyte.Assertions;
 
 namespace FGame.WindowsApp.ViewModels
 {

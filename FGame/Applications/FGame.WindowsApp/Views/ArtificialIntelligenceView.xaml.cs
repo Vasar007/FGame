@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
+using Acolyte.Assertions;
 using Prism.Mvvm;
-using FGame.WindowsApp.Domain;
 
 namespace FGame.WindowsApp.Views
 {
