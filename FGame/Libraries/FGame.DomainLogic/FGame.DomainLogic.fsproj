@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Acolyte.NET" Version="1.0.1" />
+    <PackageReference Include="Acolyte.NET" Version="1.0.2" />
   </ItemGroup>
 
   <ItemGroup>
