@@ -7,7 +7,7 @@ Simple game with some world generation.
 
 ## Dependencies
 
-Target .NET Standard is 2.1 for libraries, .NET Core is 3.1 for console and desktop app. Version of C# is 8.0, version of F# is 4.7.
+Target .NET Standard is 2.1 for libraries, .NET Core is 3.1 for console and desktop apps. Version of C# is 8.0, version of F# is 4.7.
 
 ## License information
 
