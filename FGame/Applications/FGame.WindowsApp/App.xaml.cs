@@ -34,7 +34,7 @@ namespace FGame.WindowsApp
 
         protected override Window CreateShell()
         {
-            return Container.Resolve<MainWindowView>();
+            return Container.Resolve<MainWindow>();
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
