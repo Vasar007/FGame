@@ -3,11 +3,11 @@
 namespace FGame.WindowsApp.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindowView.xaml
     /// </summary>
-    public sealed partial class MainWindow : Window
+    public sealed partial class MainWindowView : Window
     {
-        public MainWindow()
+        public MainWindowView()
         {
             InitializeComponent();
         }
