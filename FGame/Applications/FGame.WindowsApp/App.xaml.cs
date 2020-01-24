@@ -3,10 +3,10 @@ using System.Globalization;
 using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
-using FGame.WindowsApp.Views;
 using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Unity;
+using FGame.WindowsApp.Views;
 
 namespace FGame.WindowsApp
 {
