@@ -6,7 +6,7 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:viewModels="clr-namespace:FGame.WindowsApp.ViewModels"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
+        d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
         Title="{Binding Path=Title, Mode=OneWay}"
         Height="650"
         Width="725"
